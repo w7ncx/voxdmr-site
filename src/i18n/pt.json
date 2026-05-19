@@ -38,6 +38,10 @@
   "cta.setupGuide": "Guia de Configuração",
   "cta.joinCommunity": "Junta-te à Comunidade",
 
+  "support.heading": "Gostas da app? Paga-me um café",
+  "support.description": "Desenvolvo o VoxDMR nos tempos livres e do meu bolso. Se a app te ajudou a entrar no ar ou tornou os teus QSOs mais divertidos, uma pequena ajuda no Ko-fi faz toda a diferença para novas funcionalidades e para manter o projeto vivo.",
+  "support.cta": "Apoiar no Ko-fi",
+
   "footer.aboutUs": "Sobre",
   "footer.docs": "Documentação",
   "footer.privacy": "Privacidade",

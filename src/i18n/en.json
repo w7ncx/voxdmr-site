@@ -38,6 +38,10 @@
   "cta.setupGuide": "Setup Guide",
   "cta.joinCommunity": "Join the Community",
 
+  "support.heading": "Like the app? Buy me a coffee",
+  "support.description": "I build VoxDMR in my free time, on my own dime. If it's helped you get on the air or made your QSOs a little more fun, a small tip on Ko-fi goes a long way toward new features and keeping the project going.",
+  "support.cta": "Support on Ko-fi",
+
   "footer.aboutUs": "About",
   "footer.docs": "Docs",
   "footer.privacy": "Privacy",
