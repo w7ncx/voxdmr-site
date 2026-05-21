@@ -13,6 +13,7 @@ const pageTitleKeys: Record<string, string> = {
   "first-connection": "docs.page.firstConnection",
   "ptt-modes": "docs.page.pttModes",
   "audio-settings": "docs.page.audioSettings",
+  "server-profiles": "docs.page.serverProfiles",
   "talkgroups": "docs.page.talkgroups",
   "troubleshooting": "docs.page.troubleshooting",
   "changelog": "docs.page.changelog",
@@ -29,7 +30,7 @@ export function DocsSidebar({ activeSlug, open, onClose }: { activeSlug: string;
           {group.pages.map((page) => {
             const isActive = page.slug === activeSlug;
             return (
-              <Link key={page.slug} to={`/docs/${page.slug}`} onClick={onClose} className={`block text-sm rounded-lg px-3 py-2 mb-0.5 transition-colors ${isActive ? "bg-vibrant-blue text-community-bg font-semibold" : "text-on-surface-muted hover:bg-surface-raised/40"}`}>
+              <Link key={page.slug} to={`/docs/${page.slug}`} onClick={onClose} className={`block text-sm rounded-lg px-3 py-2 mb-0.5 transition-colors ${isActive ? "bg-vibrant-red text-white font-semibold" : "text-on-surface-muted hover:bg-surface-raised/40"}`}>
                 {t(pageTitleKeys[page.slug] ?? page.title)}
               </Link>
             );

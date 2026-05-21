@@ -9,6 +9,7 @@ const pageTitleKeys: Record<string, string> = {
   "first-connection": "docs.page.firstConnection",
   "ptt-modes": "docs.page.pttModes",
   "audio-settings": "docs.page.audioSettings",
+  "server-profiles": "docs.page.serverProfiles",
   "talkgroups": "docs.page.talkgroups",
   "troubleshooting": "docs.page.troubleshooting",
 };
@@ -76,7 +77,7 @@ export function DocsContent({ slug, html }: { slug: string; html: string }) {
         <div className="max-w-[680px]">
           <h1 className="text-2xl font-headline font-bold text-white mb-4">{t("docs.pageNotFound")}</h1>
           <p className="text-on-surface-muted mb-6">{t("docs.pageNotFoundText").replace("{slug}", slug)}</p>
-          <Link to="/docs/installation" className="text-vibrant-blue hover:underline">{t("docs.goToInstallation")}</Link>
+          <Link to="/docs/installation" className="text-vibrant-red hover:underline">{t("docs.goToInstallation")}</Link>
         </div>
       </div>
     );
@@ -91,13 +92,13 @@ export function DocsContent({ slug, html }: { slug: string; html: string }) {
             {prev ? (
               <Link to={`/docs/${prev.slug}`} className="group">
                 <div className="text-[10px] uppercase tracking-widest text-on-surface-muted mb-1">{t("docs.previous")}</div>
-                <div className="text-vibrant-blue font-semibold text-sm group-hover:underline">← {t(pageTitleKeys[prev.slug] ?? prev.title)}</div>
+                <div className="text-vibrant-red font-semibold text-sm group-hover:underline">← {t(pageTitleKeys[prev.slug] ?? prev.title)}</div>
               </Link>
             ) : <div />}
             {next ? (
               <Link to={`/docs/${next.slug}`} className="group text-right">
                 <div className="text-[10px] uppercase tracking-widest text-on-surface-muted mb-1">{t("docs.next")}</div>
-                <div className="text-vibrant-blue font-semibold text-sm group-hover:underline">{t(pageTitleKeys[next.slug] ?? next.title)} →</div>
+                <div className="text-vibrant-red font-semibold text-sm group-hover:underline">{t(pageTitleKeys[next.slug] ?? next.title)} →</div>
               </Link>
             ) : <div />}
           </div>
