@@ -81,14 +81,13 @@
   "cta.setupGuide": "Guia de Configuração",
   "cta.joinCommunity": "Junta-te à Comunidade",
 
-  "support.heading": "Queres deixar um agradecimento?",
-  "support.description": "O VoxDMR é feito nos meus tempos livres, por gosto. Se te ajudou a entrar no ar e quiseres mandar um obrigado, o Ko-fi está aberto. Totalmente opcional.",
   "support.cta": "Apoiar no Ko-fi",
+  "support.note": "Feito nos meus tempos livres, por gosto. O Ko-fi fica aí se quiseres deixar um agradecimento.",
 
   "footer.docs": "Documentação",
   "footer.privacy": "Privacidade",
   "footer.github": "GitHub",
-  "footer.copyright": "© 2026 VoxDMR",
+  "footer.copyright": "Feito com ❤️ por {callsign}",
 
   "privacy.title": "Política de Privacidade",
   "privacy.lastUpdated": "Última atualização: 1 de maio de 2026",

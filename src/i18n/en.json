@@ -81,14 +81,13 @@
   "cta.setupGuide": "Setup Guide",
   "cta.joinCommunity": "Join the Community",
 
-  "support.heading": "Want to say thanks?",
-  "support.description": "VoxDMR is built in my free time, for the fun of it. If it's helped you get on the air and you'd like to say thanks, Ko-fi is open. Completely optional.",
   "support.cta": "Support on Ko-fi",
+  "support.note": "Built in my free time, for the fun of it. Ko-fi is just there if you want to say thanks.",
 
   "footer.docs": "Docs",
   "footer.privacy": "Privacy",
   "footer.github": "GitHub",
-  "footer.copyright": "© 2026 VoxDMR",
+  "footer.copyright": "Built with ❤️ by {callsign}",
 
   "privacy.title": "Privacy Policy",
   "privacy.lastUpdated": "Last updated: May 1, 2026",

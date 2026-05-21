@@ -428,7 +428,7 @@ export default function App() {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 lg:py-28 px-6 lg:px-8 bg-community-bg">
+      <section className="pt-20 lg:pt-28 pb-12 lg:pb-16 px-6 lg:px-8 bg-community-bg">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -512,21 +512,21 @@ export default function App() {
       </section>
 
       {/* CTA Section */}
-      <section id="download" className="py-24 lg:py-32 px-6 lg:px-8 bg-community-bg scroll-mt-24">
+      <section id="download" className="pt-12 lg:pt-16 pb-20 lg:pb-28 px-6 lg:px-8 bg-community-bg scroll-mt-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-4xl mx-auto text-center"
+          className="max-w-3xl mx-auto text-center"
         >
           <motion.div
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <Logo size="lg" className="mx-auto mb-12" />
+            <Logo size="md" className="mx-auto mb-10" />
           </motion.div>
-          <h2 className="text-4xl lg:text-7xl font-headline font-bold mb-8 text-white tracking-tight">{t("cta.heading")}</h2>
-          <p className="text-on-surface-muted text-lg lg:text-xl mb-6 leading-relaxed max-w-2xl mx-auto">
+          <h2 className="text-5xl lg:text-7xl font-headline font-bold mb-6 text-white tracking-tight">{t("cta.heading")}</h2>
+          <p className="text-on-surface-muted text-lg lg:text-xl mb-10 leading-relaxed max-w-2xl mx-auto">
             {t("cta.description")}
           </p>
 
@@ -546,41 +546,25 @@ export default function App() {
               </a>
             </div>
           </div>
-          <div className="mt-6 flex justify-center">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-sm">
             <a href="/docs" className="inline-flex items-center gap-2 text-vibrant-blue hover:text-sky-300 font-semibold transition-colors">
               <BookOpen className="w-4 h-4" />
               {t("cta.setupGuide")}
             </a>
+            <span aria-hidden className="hidden sm:inline text-on-surface-muted/40">·</span>
+            <a
+              href="https://ko-fi.com/jcalado"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-vibrant-orange hover:text-orange-300 font-semibold transition-colors"
+            >
+              <Coffee className="w-4 h-4" />
+              {t("support.cta")}
+            </a>
           </div>
-        </motion.div>
-      </section>
-
-      {/* Support / Ko-fi */}
-      <section className="py-16 lg:py-20 px-6 lg:px-8 bg-community-bg border-t border-border">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-2xl mx-auto text-center"
-        >
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-vibrant-orange/10 text-vibrant-orange mb-6">
-            <Coffee className="w-7 h-7" />
-          </div>
-          <h2 className="text-3xl lg:text-4xl font-headline font-bold mb-4 text-white tracking-tight">
-            {t("support.heading")}
-          </h2>
-          <p className="text-on-surface-muted text-base lg:text-lg mb-8 leading-relaxed">
-            {t("support.description")}
+          <p className="mt-4 text-xs text-on-surface-muted/70">
+            {t("support.note")}
           </p>
-          <a
-            href="https://ko-fi.com/jcalado"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-press inline-flex items-center gap-3 bg-vibrant-orange hover:bg-orange-400 text-community-bg font-bold text-base lg:text-lg px-7 lg:px-8 py-3.5 lg:py-4 rounded-2xl transition-all hover:-translate-y-1"
-          >
-            <Coffee className="w-5 h-5" />
-            {t("support.cta")}
-          </a>
         </motion.div>
       </section>
 
@@ -610,7 +594,23 @@ export default function App() {
           </div>
 
           <div className="text-on-surface-muted text-sm font-medium text-center md:text-right">
-            {t("footer.copyright")}
+            {(() => {
+              const [before, after] = t("footer.copyright").split("{callsign}");
+              return (
+                <>
+                  {before}
+                  <a
+                    href="https://www.qrz.com/db/CS7BLE"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white font-semibold hover:text-vibrant-red transition-colors"
+                  >
+                    CS7BLE
+                  </a>
+                  {after}
+                </>
+              );
+            })()}
           </div>
         </div>
       </footer>
