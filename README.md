@@ -13,6 +13,10 @@ The site is published at **[voxdmr.jcalado.com](https://voxdmr.jcalado.com)**.
 
 Found a bug or have a feature request — for either the app or this site? Open an [issue on this repo](https://github.com/jcalado/voxdmr-site/issues).
 
+## Support
+
+VoxDMR is built in my free time. If you'd like to say thanks, you can [support it on Ko-fi](https://ko-fi.com/jcalado).
+
 ## License
 
 MIT
