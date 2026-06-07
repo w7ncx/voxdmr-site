@@ -1,24 +1,25 @@
 # Troubleshooting
 
-A short index of the things most likely to break and how to fix them. The bottom-bar log line in VoxDMR is the first place to look. Most failures print there. The full activity log is in the [logs directory](./installation) (`~/.local/state/voxdmr/logs/` on Linux, `%LOCALAPPDATA%\voxdmr\logs\` on Windows).
+A short index of the things most likely to break and how to fix them. The bottom-bar log line on desktop (and the event log on the Android Connection tab) is the first place to look — most failures print there. The full activity log on desktop is in the [logs directory](./installation) (`~/.local/state/voxdmr/logs/` on Linux, `%LOCALAPPDATA%\voxdmr\logs\` on Windows); on Android it's accessible from **Settings → About**.
 
 ## Connection
 
 ### Stuck at "Authenticating…" then back to Disconnected
 
-The log shows `Authentication FAILED - check password`.
+The log shows `Authentication FAILED - check password` (or `Login NAK` on Homebrew).
 
-The hotspot security password is wrong, or you're using your BrandMeister account password by mistake. Open [BrandMeister SelfCare](https://brandmeister.network/) → your profile → **Hotspot security password**. That's the one VoxDMR wants. Account passwords don't authenticate to masters.
+Depending on which network the active profile is set to:
 
-If you've never set a hotspot security password in SelfCare, set one now and re-enter it in **Settings → Connection**.
+- **BrandMeister.** The hotspot security password is wrong, or you're using your BrandMeister *account* password by mistake. Open [BrandMeister SelfCare](https://brandmeister.network/) → your profile → **Hotspot security password**. That's the one VoxDMR wants — account passwords don't authenticate to masters. If you've never set a hotspot security password in SelfCare, set one now and re-enter it in the profile.
+- **TGIF / FreeDMR / ADN / other Homebrew network.** Re-check the published credentials. FreeDMR's canonical password is `passw0rd`; TGIF and ADN have their own. If the password is right but auth still fails, flip the profile's **Hash format** between **Raw** and **Hex ASCII** — almost every Homebrew network uses Raw, but a small number of legacy installs need Hex ASCII.
 
 ### Stuck at "Connecting…" indefinitely
 
-VoxDMR can't reach the master at all. Possible causes:
+VoxDMR can't reach the server at all. Possible causes:
 
-- **Wrong host or port.** Default port is `54006`. Some masters use a different one. Confirm both in **Settings → Connection** and on the master's status page.
-- **Firewall is blocking outbound UDP.** The Rewind protocol is UDP-based. Corporate or restrictive home firewalls sometimes drop UDP. Try a different network.
-- **The master is offline.** The master picker is populated from the live BrandMeister API at startup, but a master can go down between launches. Pick another one.
+- **Wrong host or port.** BrandMeister masters use `54006`; Homebrew masters typically use `62031`. Confirm both in the profile editor and on the operator's status page.
+- **Firewall is blocking outbound UDP.** Both Rewind (BrandMeister) and Homebrew (MMDVM) are UDP-based. Corporate or restrictive home firewalls sometimes drop UDP. Try a different network.
+- **The server is offline.** The BrandMeister master picker is live, but a master can go down between launches — pick another one. Homebrew servers in the curated list (TGIF, FreeDMR, ADN) occasionally have maintenance windows; check the operator's status page.
 
 ### "Error: Invalid DMR ID"
 
@@ -26,11 +27,13 @@ The DMR ID field has to be a 7-digit number. No spaces, no dashes, no callsign. 
 
 ### Disconnects every few minutes
 
-Usually a NAT timeout on a UDP-blocking-ish router. The Rewind protocol pings periodically to keep the NAT mapping alive, but some routers age UDP entries aggressively. Workarounds:
+Usually a NAT timeout on a UDP-blocking-ish router. Both Rewind and Homebrew ping periodically to keep the NAT mapping alive, but some routers age UDP entries aggressively. Workarounds:
 
 - Use a wired connection if possible.
 - Try a different master (regional ones tend to be closer and more reliable).
 - Some consumer routers have a "UDP timeout" setting in advanced NAT/firewall. Increase it if available.
+
+**On Android**, also check **Settings → Background → Ignore battery optimizations** and (on Xiaomi/Samsung/OnePlus/Huawei) the per-app **Autostart** setting. Android aggressively kills background apps; if VoxDMR is being killed during RX you'll see periodic disconnect-then-reconnect cycles tied to screen-off.
 
 ## Audio
 
@@ -57,6 +60,7 @@ The CLIP indicator on the right of the TX meter latches red when peaks saturate.
 
 - **Linux**: most distros expose all input devices to all apps. If you're on a sandboxed Flatpak or Snap (not how VoxDMR is currently distributed), the sandbox needs to grant audio access.
 - **Windows**: open **Settings → Privacy & security → Microphone**. Make sure "Let apps access your microphone" is on, and that VoxDMR (or "Desktop apps") is allowed. After changing this, restart VoxDMR.
+- **Android**: the mic permission is requested the first time you press PTT. If you denied it, open Android **Settings → Apps → VoxDMR → Permissions → Microphone** and grant it manually. *Microphone permission denied* in the snackbar means VoxDMR couldn't capture audio.
 
 ## PTT
 
@@ -98,6 +102,8 @@ A firmware file got corrupted (partial download, disk error, accidentally edited
 ## Activity dots stay gray
 
 The live last-heard feed comes from `api.brandmeister.network` over a WebSocket. If your network blocks it, the dots in the favorites list stay gray. Everything else (RX, TX, subscribing, talking) still works. The activity feed is purely informational.
+
+**Active profile is on a Homebrew network?** Then this is expected — there's no equivalent live activity feed for TGIF, FreeDMR, ADN, etc. The dots stay grey by design. You find out who's talking by hearing them. Switch back to a BrandMeister profile and the dots will work again.
 
 To check whether your machine can reach it:
 

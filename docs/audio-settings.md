@@ -1,8 +1,18 @@
 # Audio Settings
 
-VoxDMR's audio settings live in **Settings → Audio**. Two device pickers, two gain sliders, one off-air monitor toggle. The level meters on the main window are how you actually tune the gains.
+VoxDMR's audio settings live in **Settings → Audio** on desktop, and in the **Audio** section of the **Settings** tab on Android. Two gain sliders, plus a few platform-specific extras. The level meters on the main window (desktop) or the PTT screen (Android) are how you actually tune the gains.
 
-## Input device
+## Platform differences at a glance
+
+| | Desktop | Android |
+|---|---|---|
+| Input/output device picker | Yes — pick exact OS endpoints | No — uses the Android system route (speaker / earpiece / headset / BT) |
+| RX gain range | 1× – 32× (default 4×) | 1× – 10× (default 4×) |
+| TX gain range | 0.1× – 4.0× (default 0.5×) | 0.1× – 4.0× (default 0.5×) |
+| RX AGC (Auto level) | Yes | Yes |
+| Monitor mic level off-air | Yes | No — meters always live while screen is on |
+
+## Input device (desktop)
 
 The microphone or line input VoxDMR captures from. The picker lists every input device the OS exposes. On Linux that's PulseAudio / PipeWire / ALSA; on Windows, WASAPI shared-mode endpoints.
 
@@ -10,9 +20,15 @@ VoxDMR remembers the device by its name. If you hot-swap headsets, the picker up
 
 > Capture is fixed at 48 kHz mono internally. The vocoder needs 8 kHz; VoxDMR resamples on the fly. You don't need to set anything special in the OS.
 
-## Output device
+## Output device (desktop)
 
-Where received audio plays. Same shape as the input picker. Headphones strongly recommended for a desktop client to avoid feedback when you're set up next to your microphone.
+Where received audio plays. Same shape as the input picker. Headphones strongly recommended on a desktop client to avoid feedback when you're set up next to your microphone.
+
+## Routing (Android)
+
+Android handles input and output routing for you — VoxDMR captures from whichever mic is currently active (built-in, wired headset, BT headset) and plays through whichever output is active (speaker, earpiece, headset). Plug in a wired headset or pair a BT device and Android switches automatically; VoxDMR follows.
+
+There's no in-app device picker on Android. If you want to force playback through the earpiece instead of the speaker, use Android's media output picker (lock-screen / quick-settings).
 
 ## RX gain
 

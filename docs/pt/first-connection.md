@@ -1,99 +1,165 @@
 # Primeira Ligação
 
-Liga-te a um talkgroup BrandMeister e faz a tua primeira transmissão.
+Entra num talkgroup DMR e faz a tua primeira transmissão.
 
-Esta página assume que já concluíste a [Instalação](./installation). O VoxDMR está a correr, o ecrã de configuração inicial desapareceu e a interface principal está visível.
+Esta página assume que já terminaste a [Instalação](./installation), o VoxDMR está a correr, a configuração do firmware está feita e a interface principal está visível.
 
-## Do que precisas
+O VoxDMR fala **dois protocolos**, e a configuração depende da rede a que te queres ligar:
 
-- **DMR ID** (numérico, 7 dígitos). Emitido em [radioid.net](https://radioid.net).
-- **Hotspot security password**: no teu perfil [BrandMeister SelfCare](https://brandmeister.network/), em _Hotspot security password_. **Não é a password da tua conta BrandMeister.** É uma string separada que defines no SelfCare e que é partilhada por todos os teus hotspots e clientes.
-- **Um servidor master BrandMeister**: normalmente o regional mais próximo (por exemplo `master.brandmeister.network` ou um master específico do país, como `2682.master.brandmeister.network`).
+- A **BrandMeister** usa o protocolo **Rewind**. O diretório de masters é puxado em tempo real; basta escolheres um master.
+- A **TGIF, FreeDMR, ADN.systems e outras redes baseadas em MMDVM** usam o protocolo **Homebrew** (MMDVM_HBP). Não há um diretório central, por isso o VoxDMR traz uma pequena lista curada (TGIF Network, FreeDMR United Kingdom, ADN Portugal) e ainda uma opção *Servidor personalizado* para tudo o que não está listado.
 
-## Configurar a ligação
+Não escolhes um ou outro de uma vez por todas — o VoxDMR suporta **vários perfis**, cada um com o seu protocolo, servidor e credenciais. Adiciona os que quiseres; muda entre eles com um toque.
 
-Abre as **Definições** (ícone da engrenagem) e muda para o separador **Connection**.
+## O que precisas
 
-| Campo | O que indicar |
+- **DMR ID** (numérico, 7 dígitos). Emitido pelo [radioid.net](https://radioid.net).
+- **Uma password** da rede a que te vais ligar (vê [Instalação → Requisitos](./installation#requisitos) para saber o que cada rede espera).
+- **Indicativo** (opcional, mas as redes Homebrew costumam querer um para identificação).
+
+## Desktop
+
+### Configurar a ligação
+
+Abre **Definições** (ícone de engrenagem) e vai ao separador **Connection**. No cartão **PROFILES**, clica em **+ Add profile** para criar um novo perfil. (O formulário expande abaixo da lista.)
+
+Preenche os campos de **Identidade**:
+
+| Campo | O que escrever |
 |---|---|
-| **Master** | Escolhe da lista (é preenchida com os masters BrandMeister ativos, atualizados em tempo real ao arranque). Se o teu não estiver listado, escolhe **Custom** e escreve-o manualmente. |
-| **Port** | Por omissão `54006`. Não alterar a menos que o master use uma porta diferente. |
+| **Label** | Um nome curto para este perfil ("Casa", "BM móvel", "TGIF", etc.). |
 | **DMR ID** | O teu ID de 7 dígitos do radioid.net. |
-| **Password** | A tua hotspot security password. |
-| **Auto-connect** | Desligado por agora. Liga depois de tudo funcionar. |
+| **Password** | A password da rede para este perfil. |
+| **Callsign** | Opcional. Usado pelas redes Homebrew. |
 
-Fecha as Definições. As alterações são guardadas automaticamente.
+Em **Server**, escolhe um protocolo — **BrandMeister** ou **Others**:
 
-## Escolhe o talkgroup inicial
+**BrandMeister** (Rewind):
 
-O VoxDMR não tem um campo "talkgroup por omissão" nas definições. Em vez disso, o talkgroup que tiveres selecionado quando a app guarda a configuração passa a ser aquele a que ela adere no próximo arranque.
+- O **picker de master** abre com a lista de masters ativos puxada da API da BrandMeister no arranque. Escolhe o mais próximo de ti. Se o teu não estiver listado, escolhe **Custom server…** e escreve o hostname e porto (`54006` por defeito) manualmente.
 
-Para a primeira ligação, escreve `9990` no seletor de talkgroups na janela principal e clica no resultado **Parrot**. O Parrot devolve o teu áudio em eco para confirmares que a ida e volta funciona.
+**Others** (Homebrew):
 
-## Ligar
+- O **picker de servidor** abre com as entradas curadas: ADN Portugal (2681), FreeDMR United Kingdom, TGIF Network. Escolhe uma e o host, porto e formato de hash são preenchidos automaticamente.
+- **Custom server…** abre campos de host/porto e ainda um seletor de **hash format** (Raw vs Hex ASCII). A maioria das redes Homebrew usa **Raw**; muda para Hex ASCII só se a autenticação continuar a falhar.
 
-Clica em **Connect** na janela principal. O indicador de estado na barra de título (e na barra inferior) percorre estes estados:
+Clica em **Save**. O novo perfil aparece na lista. Clica no rádio respetivo para o tornares ativo.
 
-1. **Disconnected**: ainda nada.
-2. **Connecting…**: handshake TCP/UDP com o master.
-3. **Authenticating…**: o VoxDMR apresenta o teu DMR ID + password.
-4. **Connected**: autenticação aceite; a subscrever o talkgroup selecionado.
-5. **Ready**: talkgroup subscrito; podes transmitir e receber.
+### Escolher o talkgroup inicial
 
-Se ficar parado em **Authenticating…** e voltar a Disconnected, a password está errada. Consulta [Resolução de problemas](./troubleshooting).
+O VoxDMR não tem um campo "talkgroup por defeito" nas definições. Em vez disso, o talkgroup que estiver selecionado quando a app guardar a configuração é o que ela vai subscrever na próxima ligação.
 
-## Primeira transmissão
+Para a tua primeira ligação à BrandMeister, escreve `9990` no campo de pesquisa do ecrã principal e clica no resultado **Parrot**. O Parrot devolve-te o áudio para confirmares que o circuito completo funciona. (A maior parte das redes Homebrew tem o seu próprio Parrot — na TGIF é `9990`; na FreeDMR também.)
+
+### Ligar
+
+Clica em **Connect** no separador **Connection** (ou no botão de ligação no rodapé). O indicador de estado passa por estas fases:
+
+1. **Disconnected** — nada a acontecer.
+2. **Connecting…** — handshake com o servidor.
+3. **Authenticating…** — o VoxDMR está a apresentar o teu DMR ID + password (+ indicativo na Homebrew).
+4. **Connected** — autenticação aceite; a subscrever o talkgroup selecionado.
+5. **Ready** — talkgroup subscrito; podes transmitir e receber.
+
+Se parares em **Authenticating…** e voltares a Disconnected, a password (ou o formato de hash, na Homebrew) está errada. Vê [Resolução de Problemas](./troubleshooting).
+
+### Faz a tua primeira transmissão
 
 Com **9990 (Parrot)** como talkgroup ativo:
 
-1. Mantém **Espaço** premido (a tecla PTT por omissão).
-2. A barra inferior mostra `>>> PTT DOWN, Transmitting` e um cronómetro de TX.
-3. Diz uma frase curta de teste, "Teste, aqui _o teu indicativo_, teste de parrot".
-4. Larga o Espaço.
-5. Após cerca de um segundo, o Parrot devolve o teu áudio em eco. Deves ouvir-te no dispositivo de saída.
+1. Mantém a **barra de espaço** premida (a tecla PTT por defeito).
+2. O rodapé mostra `TX HH:MM:SS` e o medidor TX fica ativo.
+3. Diz uma frase curta de teste — "Teste, daqui _o teu indicativo_, parrot test".
+4. Larga a barra de espaço.
+5. Cerca de um segundo depois, o Parrot devolve-te o áudio.
 
-Se te ouves, estás no ar. Se não, vê [Resolução de problemas](./troubleshooting). As causas mais comuns são permissões do microfone, dispositivo de áudio errado, ou ganho de TX a zero.
+Se te ouviste, estás no ar. Se não, vê [Resolução de Problemas](./troubleshooting).
 
-> A tecla PTT é configurável em **Settings → Interface**. Se o Espaço entrar em conflito com outra janela, ou preferires uma tecla de função, muda-a aí.
+## Android
+
+### Configurar a ligação
+
+Toca no separador **Connection** na barra inferior. No cartão **Identity** no topo, toca na linha (vai dizer *Não configurado* se for o primeiro arranque).
+
+Isto abre o ecrã **Profiles**. Toca em **+ Add profile** no fim.
+
+Preenche os campos de **Identidade** no modal que aparece:
+
+| Campo | O que escrever |
+|---|---|
+| **Label** | Um nome curto para este perfil. |
+| **DMR ID** | O teu ID de 7 dígitos. |
+| **Password** | A password da tua rede. |
+| **Callsign** | Opcional. As redes Homebrew costumam querer um. |
+
+Em **Server**, toca no controlo segmentado para escolher **BrandMeister** ou **Others**.
+
+**BrandMeister**: toca na linha do servidor para abrir a bottom sheet **BrandMeister servers**. Pesquisa por país ou hostname; toca num master para o selecionar. O porto é `54006` e não precisas de mexer.
+
+**Others**: toca na linha do servidor para abrir a bottom sheet **Servers** com TGIF, FreeDMR, ADN Portugal. Toca numa para selecionar — host, porto e formato de hash são preenchidos. Podes editar tudo manualmente depois.
+
+O seletor **Hash Format** (só na Homebrew) oferece **Raw (default)** ou **Hex-ASCII**.
+
+Toca em **Save**. O novo perfil aparece na lista. Toca no rádio respetivo para o tornares ativo.
+
+### Ligar
+
+De volta ao separador **Connection**, toca em **Connect**. O cartão hero passa pelos mesmos estados que no desktop (Connecting → Authenticating → Connected → Ready).
+
+### Escolher um talkgroup
+
+Muda para o separador **PTT** (canto inferior esquerdo). Toca no **badge TG** na barra superior (vai dizer *No TG* se nenhum estiver selecionado). O picker de talkgroup abre como uma bottom sheet:
+
+- **Escreve um ID numérico** (tenta `9990`). Aparecem dois cartões: *Use 9990 as talkgroup* e *Use 9990 as private call*. Toca no de talkgroup.
+- **Ou pesquisa por nome**: escreve "parrot" para o encontrares no CSV BrandMeister. Toca no resultado.
+
+A sheet fecha e o badge TG na barra superior atualiza para `TG 9990`.
+
+### Faz a tua primeira transmissão
+
+Carrega e segura o grande botão vermelho **TX** no fim do ecrã PTT. A dica em baixo diz *Hold to transmit* (ou *Tap to transmit* no modo toggle). O medidor TX fica ativo, o timer começa a contar e o botão fica vermelho mais vivo.
+
+Larga. Cerca de um segundo depois, o Parrot devolve-te o áudio pelo altifalante (ou pela saída áudio que estiveres a usar).
+
+Se não te ouvires, vê [Resolução de Problemas](./troubleshooting).
+
+> Se já tens uma tecla de hardware atribuída (botões de volume, botão do headset, comando BT) nas Definições, podes usá-la em vez do botão no ecrã. Vê [Modos PTT](./ptt-modes).
 
 ## Receber áudio
 
-Enquanto estás ligado, qualquer tráfego no teu talkgroup ativo é reproduzido automaticamente no dispositivo de saída. O **painel RX** mostra, da transmissão ativa:
+Enquanto estás ligado, qualquer tráfego no talkgroup ativo toca automaticamente na saída de áudio. O **cartão de chamada** (rodapé do desktop / ecrã PTT no Android) mostra:
 
-- **Source ID** (DMR ID da estação a transmitir)
-- **Callsign** (quando registado)
-- **Talker alias** (string de nome enviada em direto, quando suportado)
-- **Group ID** (o talkgroup onde está o tráfego)
+- **Source ID** — o DMR ID da estação que está a transmitir.
+- **Indicativo** (quando registado).
+- **Talker alias** — nome em direto enviado pelo ar, quando suportado.
+- **Group ID** — o talkgroup onde corre o tráfego.
 
-Quando a transmissão termina, vê-se brevemente `RX end` na barra inferior.
+Quando a transmissão termina, o cartão volta a *Idle*.
 
 ## Mudar de talkgroup
 
-O **seletor de talkgroups** na janela principal permite mudar o talkgroup que estás a ouvir:
+O picker de talkgroup (painel esquerdo no desktop, bottom sheet no Android) permite-te mudar de talkgroup. Escreve uma pesquisa, toca/clica num resultado e a subscrição atualiza-se imediatamente. Vê [Talkgroups](./talkgroups) para a explicação completa do picker, incluindo favoritos, indicador de atividade e aliases por perfil.
 
-- **Pesquisa** por nome ou número.
-- **Estrela** um talkgroup para o adicionar aos favoritos.
-- **Clica** num talkgroup para mudar.
-
-A mudança é instantânea. O VoxDMR envia uma atualização de subscrição ao master e começa a receber o tráfego do novo talkgroup.
-
-Alguns talkgroups populares para experimentar depois de o Parrot funcionar:
+Alguns talkgroups populares para experimentar depois do Parrot:
 
 | ID | Nome | Atividade |
 |---|---|---|
-| 91 | Worldwide | Sempre com tráfego |
+| 91 | Worldwide | Sempre ativo |
 | 92 | Europe | Regional |
 | 235 | UK | Nacional |
 | 268 | Portugal | Nacional |
 | 269 | Switzerland | Nacional |
-| 9990 | Parrot | Teste em eco (apenas o teu áudio) |
+| 9990 | Parrot | Teste de eco (só o teu áudio) |
+
+> Os números de talkgroup são específicos da rede. A lista acima é da BrandMeister; a TGIF e a FreeDMR têm a sua numeração. Os nomes vêm do CSV BrandMeister que acompanha o VoxDMR — em redes Homebrew, o picker mostra os IDs mas não os nomes, a não ser que tenhas atribuído um [alias personalizado](./talkgroups#renomear-talkgroups).
 
 ## Quando funcionar
 
-Volta a Settings → Connection e ativa **Auto-connect**. A partir daí, o VoxDMR liga-se automaticamente ao arranque sem cliques adicionais.
+Abre Definições → Connection (ou o cartão Session no Android) e liga **Auto-connect**. A partir daí, o VoxDMR liga-se automaticamente no arranque sem cliques extra.
 
 ## Próximos passos
 
-- [PTT Modes](./ptt-modes). Mudar a tecla PTT, alternar entre push-to-talk e toggle.
-- [Audio Settings](./audio-settings). Escolher dispositivos de microfone e saída, ajustar ganho.
-- [Talkgroups](./talkgroups). Gerir favoritos e a base de dados de talkgroups.
+- [Perfis de Servidor](./server-profiles) — mantém várias configurações de rede lado a lado e muda com um toque.
+- [Talkgroups](./talkgroups) — favoritos, indicador de atividade, aliases por perfil.
+- [Modos PTT](./ptt-modes) — push-to-talk vs toggle, mudar a tecla PTT, botões de hardware no Android.
+- [Definições de Áudio](./audio-settings) — escolher dispositivos, ajustar ganho.

@@ -2,6 +2,23 @@
 
 Notas de versão do VoxDMR. Cada página de release no GitHub tem a lista completa de commits e os binários assinados; isto é o resumo humano.
 
+## v0.10.0
+
+_Lançada em maio de 2026. Desktop + Android._
+
+A grande mudança: o VoxDMR já não é só BrandMeister, nem está limitado a um único servidor. Podes configurar tantos perfis quantos quiseres, cada um preso à sua rede e credenciais, e mudar entre eles com um toque.
+
+- **Protocolo Homebrew (MMDVM_HBP)** ao lado do já existente Rewind. Isto traz **TGIF Network, FreeDMR, ADN.systems** e qualquer outra rede DMR baseada em MMDVM para o VoxDMR. O caminho TX/RX é o mesmo — o tráfego Homebrew é codificado com o mesmo vocoder AMBE+2 e aparece no mesmo cartão de chamada.
+- **Lista curada de servidores Homebrew.** Quando escolhes o protocolo **Others**, o picker oferece TGIF Network, FreeDMR United Kingdom e ADN Portugal (2681) à partida, mais uma opção *Custom server…* para tudo o que não esteja listado. A lista vem incluída no binário; faz PR no GitHub para adicionar mais.
+- **Toggle de formato de hash** para servidores Homebrew personalizados — **Raw** (a convenção HBlink/MMDVMHost usada por todas as grandes redes) ou **Hex ASCII**, para a rara rede que ainda usa o formato antigo. As entradas curadas vão para Raw por defeito.
+- **Perfis de Servidor.** Definições → Connection ganhou um cartão **PROFILES**. Cada perfil junta label, DMR ID, indicativo, protocolo, servidor, password, e os seus próprios favoritos + aliases de talkgroup. Mudar de perfil desliga, troca a configuração toda e volta a ligar.
+- **Aliases de talkgroup por perfil.** Clique direito num TG (ou toque longo no Android) para lhe dar um nome personalizado que substitui o da base de dados. O alias é por perfil — os teus perfis BrandMeister e TGIF podem rotular o `91` de formas diferentes. Volta automaticamente ao nome oficial quando não há alias.
+- **Picker de TG seccionado.** O picker no ecrã principal agora agrupa em **DMR ID** (quando escreves um ID numérico), **Favourites** e **Results**. Os cabeçalhos só aparecem quando têm linhas. A secção DMR ID expõe tanto *Use as talkgroup* como *Use as private call*, tornando IDs personalizados cidadãos de primeira.
+- **App Android.** Toda a pilha de protocolos/perfis vem também no cliente Android — mesmo core Rust, UI Flutter em Material 3, pickers de servidor em bottom sheet, toque longo para renomear. Já disponível na [Google Play](https://play.google.com/store/apps/details?id=com.jcalado.voxdmr).
+- **Localização.** Definições, assistente de configuração, modais, toasts e os labels da vista principal foram extraídos para um catálogo de strings. Inglês e Português (Portugal) já estão disponíveis; o seletor de idioma fica em Definições → Interface no desktop e em Definições → Acerca no Android.
+
+Migração da configuração: ficheiros `config.toml` existentes são migrados para um único perfil chamado "Default" com o protocolo Rewind — o teu DMR ID, password, master, favoritos e aliases mantêm-se intactos.
+
 ## v0.9.0
 
 _Lançada em maio de 2026._

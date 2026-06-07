@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { Logo } from "../Logo";
 import { useLanguage } from "../i18n/LanguageContext";
 import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
+import { PlatformSwitcher } from "./PlatformSwitcher";
 
 export function DocsNav({ sidebarOpen, onToggleSidebar }: { sidebarOpen: boolean; onToggleSidebar: () => void }) {
   const { t } = useLanguage();
@@ -20,8 +21,9 @@ export function DocsNav({ sidebarOpen, onToggleSidebar }: { sidebarOpen: boolean
         <span className="text-on-surface-muted text-sm">{t("docs.slash")}</span>
       </div>
       <div className="flex items-center gap-3">
+        <PlatformSwitcher />
         <LanguageSwitcher />
-        <Link to="/" className="text-on-surface-muted text-sm hover:text-white transition-colors font-medium">{t("docs.backToSite")}</Link>
+        <Link to="/" className="hidden sm:inline text-on-surface-muted text-sm hover:text-white transition-colors font-medium">{t("docs.backToSite")}</Link>
       </div>
     </nav>
   );

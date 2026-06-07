@@ -1,18 +1,20 @@
 # PTT Modes
 
-Push-to-talk on VoxDMR is a software trigger. There's a key on your keyboard, an on-screen button, and a setting that controls how either of them behaves. This page covers the two PTT modes and how to bind the trigger to a different key.
+Push-to-talk on VoxDMR is a software trigger. There's a key (or hardware button), an on-screen button, and a setting that controls how either of them behaves. This page covers the two PTT modes and how to bind the trigger to a different key.
 
 ## The two modes
 
-Open **Settings → Interface**. The **PTT mode** drop-down has two choices:
+**Desktop:** open **Settings → Interface**. The **PTT mode** picker has two choices.
+
+**Android:** open the **Settings** tab. Under **Session**, the **PTT mode** segmented button has two choices.
 
 **Push to talk** (default). Hold the key (or hold the on-screen button) to transmit. Release to stop. The classic radio behavior. This is what you want if PTT is muscle memory for you and you don't want to think about state.
 
-**Toggle**: tap the key once to start transmitting, tap again to stop. Useful for long announcements, net check-ins, or any situation where holding a key gets uncomfortable.
+**Toggle / Tap**: tap the key once to start transmitting, tap again to stop. Useful for long announcements, net check-ins, or any situation where holding a key gets uncomfortable.
 
-You can switch modes mid-transmission. The TX state itself doesn't change. Only how subsequent presses are interpreted.
+You can switch modes mid-transmission. The TX state itself doesn't change — only how subsequent presses are interpreted.
 
-## The PTT key
+## The PTT key (desktop)
 
 By default, **Spacebar** triggers PTT. You can rebind it to almost any key.
 
@@ -44,6 +46,21 @@ Modifiers are used by the OS and other apps for shortcuts; if PTT was bound to C
 
 > Modifier **combinations** (e.g. Ctrl+F1) aren't supported either. Only single keys. If you need a hard-to-hit key, F8 / F12 / Insert are common choices that don't conflict with anything else.
 
+## Hardware keys (Android)
+
+Android phones don't have a spacebar, but most have **volume keys**, and many headsets or BT remotes expose extra buttons. You can bind any of them to PTT.
+
+1. Open the **Settings** tab.
+2. Scroll to the **Hardware** section.
+3. Tap **Hardware key binding**. The button enters capture mode — press the key you want to use.
+4. Tap again to clear the binding.
+
+Once a hardware key is bound, the **Hide on-screen button** toggle below it becomes available. Turn it on if you'd rather rely entirely on the hardware button and reclaim the screen space.
+
+Bluetooth headset buttons, volume rockers, dedicated PTT keys on rugged phones — all work as long as Android delivers the key event to the foreground app. Some launchers and accessibility services intercept volume keys for their own use; if the bind doesn't trigger PTT, try a different key.
+
+> **Keep screen on** under the same Hardware section keeps the display awake while VoxDMR is in the foreground — useful for net check-ins where you don't want the screen to dim mid-conversation.
+
 ## The on-screen button
 
 The big red **TX** button on the main window does exactly what the PTT key does, in whichever mode you're in. It also respects the mode:
@@ -63,11 +80,13 @@ While you're keyed up, three things change:
 
 When idle, the bottom bar shows a hint instead, `HOLD SPACE` in push-to-talk mode or `TAP SPACE` in toggle mode (with whatever key you've actually bound).
 
-## Window focus
+## Window / app focus
 
-VoxDMR's PTT key works any time the **main window has keyboard focus**. If you're typing into another app and press your PTT key there, VoxDMR doesn't see it. Click the VoxDMR window first.
+**Desktop:** VoxDMR's PTT key works any time the **main window has keyboard focus**. If you're typing into another app and press your PTT key there, VoxDMR doesn't see it. Click the VoxDMR window first.
 
-(VoxDMR doesn't grab a global hotkey. That's a deliberate decision. It would race with desktop shortcut managers and require extra OS permissions.)
+(VoxDMR doesn't grab a global hotkey. That's a deliberate decision — it would race with desktop shortcut managers and require extra OS permissions.)
+
+**Android:** the hardware-key binding works any time VoxDMR is the foreground app. While the app is in the background, Android routes key events to whatever's in front. To keep PTT available without unlocking the phone, leave VoxDMR foregrounded and turn on **Keep screen on**.
 
 ## Edge cases
 

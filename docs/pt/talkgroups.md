@@ -1,95 +1,151 @@
 # Talkgroups
 
-O seletor de talkgroups na janela principal é onde passas a maior parte do tempo no VoxDMR. Esta página cobre como selecionar um talkgroup, construir a tua lista de favoritos, o indicador de atividade ao vivo e as chamadas privadas.
+O picker de talkgroup é onde passas a maior parte do tempo no VoxDMR. Esta página cobre seleção de talkgroup, construção da lista de favoritos, indicador de atividade, chamadas privadas e renomear talkgroups com aliases personalizados.
 
-## O seletor
+> **Por perfil.** Favoritos e aliases pertencem ao **perfil ativo**. Mudar para outro perfil carrega a sua própria lista. Vê [Perfis de Servidor](./server-profiles).
 
-O seletor tem três controlos empilhados, de cima para baixo:
+## Desktop
 
-1. **Campo de pesquisa**: `Search talkgroups or enter ID…`
-2. Caixa **Private call**.
-3. **Corpo da lista**, que mostra os teus favoritos por omissão e os resultados correspondentes quando escreves.
+### O picker
 
-A lista atualiza enquanto escreves. Não há botão de "aplicar" em lado nenhum. Clicas numa linha e o VoxDMR envia imediatamente uma atualização de subscrição ao master.
+O picker é o **painel esquerdo** da janela principal. De cima para baixo:
 
-## Selecionar um talkgroup
+1. **Campo de pesquisa**: `Search talkgroups or enter ID…`. Auto-focado no arranque.
+2. **Secções** aparecem como cabeçalhos cinzentos suaves, apenas quando há linhas para mostrar:
+   - **DMR ID** — quando escreveste um ID numérico que ainda não está nos favoritos. Dois cartões: *Use {id} as Talkgroup* e *Use {id} as Private call*.
+   - **Favourites** — os teus talkgroups guardados, com o indicador de atividade.
+   - **Results** — resultados do CSV BrandMeister (só quando estás a pesquisar e ligado à BrandMeister).
 
-Há quatro formas de pôr um talkgroup no ar:
+Clica numa linha e o VoxDMR envia imediatamente um update de subscrição ao servidor.
 
-**Pelos favoritos.** Clica em qualquer linha da lista de favoritos. A linha fica azul e esse talkgroup passa a ativo.
+### Selecionar um talkgroup
 
-**Por um resultado de pesquisa.** Começa a escrever no campo de pesquisa. Os resultados que correspondem por nome ou ID aparecem sob um cabeçalho **More results** (limitado a 8 linhas). Clica num para mudar.
+Quatro formas de pôr um talkgroup no ar:
 
-**Por ID exato.** Escreve um ID numérico e prime **Enter**. Se o ID não estiver na base de dados, o VoxDMR usa-o como TG personalizado na mesma. Útil para talkgroups regionais ou privados que não estejam na lista incluída.
+**A partir dos favoritos.** Clica em qualquer linha de favorito.
 
-**Pelo teclado.** Com o campo de pesquisa vazio, **↑ / ↓** destacam um favorito e **Enter** ativa-o. Rápido para saltar entre dois TGs sem largar o teclado.
+**A partir de um resultado de pesquisa.** Começa a escrever — resultados por nome ou ID aparecem em **Results**. Clica num para mudar.
 
-## Marcar um talkgroup como favorito
+**Por ID exato.** Escreve um ID numérico. A secção **DMR ID** aparece com *Use {id} as Talkgroup* (e *Private call*, vê abaixo). Clica no cartão de talkgroup. Funciona para IDs que a base de dados não conhece — TGs regionais ou privados, ou TGs de redes Homebrew que não estão no CSV BrandMeister.
 
-Quando pesquisas e o resultado que queres ainda não é um favorito, a secção **More results** mostra-o com um botão **★** ao lado do nome. Clica na estrela para o guardar. O TG sai dos resultados de pesquisa e entra na tua lista de favoritos.
+**A partir do teclado.** Com o campo de pesquisa vazio, **↑ / ↓** destaca um favorito e **Enter** ativa-o.
 
-Se o talkgroup que queres não estiver na base de dados incluída (um personalizado ou regional), seleciona-o primeiro escrevendo o ID e premindo Enter; assim que for o TG ativo, podes marcá-lo como favorito da mesma forma.
+### Marcar um talkgroup como favorito
 
-## Gerir favoritos
+Cada resultado tem um botão **★** ao lado do nome. Clica para adicionar aos favoritos. A linha desaparece dos resultados e entra na lista de favoritos.
 
-Clica num favorito para o tornar ativo. O favorito selecionado mostra uma pequena tira de ações à direita:
+Se o talkgroup não está no CSV (custom, regional ou de outra rede), seleciona-o por ID primeiro; depois de ativo, marca como favorito.
 
-- **📌 Pin**: move este favorito para o topo da lista.
-- **🔓 / 🔒 Lock**: alterna a flag de **chamada privada** para este favorito. Trancado = destino de chamada privada (ver abaixo).
-- **🗑 Trash**: remove este favorito da lista.
+### Gerir favoritos
 
-Para **reordenar**, mantém o botão esquerdo do rato premido sobre um favorito e arrasta-o para cima ou para baixo. Larga na linha onde o queres. A nova ordem é guardada automaticamente.
+Clica num favorito para o ativares. O favorito selecionado mostra uma tira de ações à direita:
 
-Atalhos de teclado sobre o favorito destacado:
+- **📌 Pin** — move este favorito para o topo da lista.
+- **🔓 / 🔒 Lock** — alterna a flag de **private call** (vê abaixo).
+- **🗑 Trash** — remove dos favoritos.
+
+Para **reordenar**, segura o botão esquerdo do rato num favorito e arrasta-o para cima ou para baixo. A nova ordem guarda-se automaticamente.
+
+Atalhos de teclado no favorito destacado:
 
 | Tecla | Ação |
 |---|---|
-| **↑ / ↓** | Move o destaque para cima ou para baixo |
-| **Enter** | Ativa (subscreve) o TG destacado |
+| **↑ / ↓** | Move o destaque |
+| **Enter** | Ativa (subscrever) o TG destacado |
 | **Alt + ↑ / ↓** | Reordena para cima ou para baixo |
 | **Delete** | Remove dos favoritos |
-| **Esc** | Cancela um arrastar em curso |
+| **Esc** | Cancela um arrasto em curso |
 
-Os favoritos persistem entre arranques no `config.toml` (na tua [diretoria de configuração](./installation)).
+### Renomear talkgroups
 
-## O indicador de atividade
+Podes dar a qualquer talkgroup um nome personalizado que substitui o da base de dados. O alias é **por perfil** — o teu perfil BrandMeister e o teu perfil TGIF podem dar ao `91` etiquetas diferentes.
 
-Cada linha de favorito tem um ponto colorido na borda esquerda. Diz-te o que se está a passar nesse talkgroup com um relance:
+**Clica com o botão direito em qualquer favorito ou resultado** e abre-se o modal **Rename talkgroup**:
 
-| Ponto | Significado |
-|---|---|
-| 🟢 **Verde** | Talkgroup ativo. O que estás a ouvir e onde o teu PTT vai transmitir. |
-| 🟡 **Âmbar** | Atividade ao vivo nos **últimos 30 segundos**. Alguém está a falar ou acabou de falar. A linha também mostra o emissor, por exemplo `← G4ABC John`. |
-| ⚫ **Cinza** | Inativo. Sem tráfego recente. |
+- O nome **Official** da base de dados é mostrado para referência (ou `—` se desconhecido).
+- **Custom name** — escreve o teu alias aqui.
+- **Reset** — só fica ativo quando já existe um alias; limpa-o e volta ao nome oficial.
+- **Cancel** / **Save**.
 
-A feed de atividade vem da stream "last-heard" ao vivo da BrandMeister sobre WebSocket. Não tens de estar sintonizado num TG para veres o ponto ficar âmbar. Olha para a lista, vê onde está a ação, clica para entrar.
+O alias é usado em todo o lado onde o TG aparece: lista de favoritos, resultados, rodapé ("TG 91 · World-wide") e cartão de chamada.
 
-O estado âmbar expira 30 segundos depois da última atualização, por isso, se um evento de Stop se perder, o ponto limpa-se sozinho na mesma.
+Útil para:
 
-> A feed é apenas de leitura e sem autenticação, por isso não é preciso configurar nada. Se a tua rede bloquear `api.brandmeister.network`, os pontos ficam cinza mas tudo o resto (RX, TX, subscrições) continua a funcionar.
+- **TGs Homebrew** que não estão no CSV BrandMeister — dá-lhes um nome reconhecível uma vez e nunca mais precisas de procurar.
+- **Alcunhas locais** — "Net do café" em vez de `91`, "Pai" em vez de um ID de chamada privada.
+- **Shacks multilingues** — renomeia `268` para "Portugal" ou "Portuguesa" consoante o perfil em que estás.
+
+## Android
+
+### O picker
+
+O picker de talkgroup no Android é uma **bottom sheet** aberta pelo **badge TG** na barra superior do ecrã PTT (canto superior direito; mostra *No TG* se nenhum estiver selecionado, ou *TG {id}* caso contrário).
+
+Layout:
+
+1. **Campo de pesquisa fixo** no topo — `Search by name or DMR ID…`.
+2. **DMR ID** quando escreves só dígitos — dois cartões: *Use {id} as talkgroup* e *Use {id} as private call*, cada um com toggle de estrela.
+3. **FAVOURITES** — os teus TGs guardados (só quando a pesquisa está vazia).
+4. **ALL TALKGROUPS** / **RESULTS** — linhas do CSV ou resultados de pesquisa.
+
+Toca numa linha para subscrever; a sheet fecha-se e a barra superior atualiza.
+
+### Marcar favoritos
+
+Toca na **★** de qualquer linha para guardar (ou retirar) dos favoritos. A sheet mantém-se aberta para poderes marcar vários sem voltar a abri-la.
+
+### Renomear talkgroups (Android)
+
+**Toca e segura em qualquer linha de TG** no picker — favorito, resultado de pesquisa, ou um dos cartões *Use {id} as…*. O diálogo **Rename talkgroup {id}** abre:
+
+- *Official: {csv_name}* é mostrado para referência.
+- **Custom name**, máximo 48 caracteres.
+- **Reset** — limpa o alias e volta ao nome oficial.
+- **Cancel** / **Save**.
+
+O alias é "usado em todo o lado onde este ID aparece" — mesmo âmbito do desktop, mesma forma de armazenamento por perfil.
 
 ## Chamadas privadas
 
-Alguns IDs DMR são utilizadores individuais ou nós fixos em vez de grupos. Chamar um deles é uma **chamada privada** em termos DMR. Endereçada a um único ID, não distribuída por um grupo.
+Alguns DMR IDs são utilizadores individuais ou nós fixos em vez de grupos. Chamar um desses é uma **chamada privada** em termos DMR — dirigida a um único ID, não distribuída por um grupo.
 
-Há duas formas de fazer uma chamada privada:
+**Desktop:** quando tens um destino privado ativo, clica no ícone **🔓 lock** na tira de ações para o guardar como favorito de chamada privada. O ícone passa a 🔒 e a linha ganha o sufixo `(private)`. Ou, na secção DMR ID, clica em **Use {id} as Private call** em vez de *Talkgroup*.
 
-**Ad-hoc**: escreve o ID de destino, ativa **Private call** e clica. A transmissão seguinte é encaminhada como chamada privada. A flag mantém-se até a desativares.
+**Android:** na secção DMR ID, toca em **Use {id} as private call**. O badge TG na barra superior mostra a flag privada, e (se marcado como favorito) a linha tem um ícone de pessoa e o sufixo `(private)`.
 
-**Guardada como favorito**: quando tens um destino privado ativo, clica no ícone **🔓 cadeado** na tira de ações para o guardar como favorito de chamada privada. O ícone passa a 🔒 e a etiqueta da linha ganha o sufixo `(private)`. Daí em diante, escolher esse favorito ativa automaticamente a flag de chamada privada.
+O indicador de atividade (abaixo) é suprimido para favoritos de chamada privada. A BrandMeister continua a publicar eventos para esses IDs, mas o ponto seria enganador (verias o tráfego de *outras pessoas* para esse ID, não o teu), por isso o VoxDMR mantém-no cinzento.
 
-O indicador de atividade é suprimido para favoritos de chamada privada. A BrandMeister continua a publicar eventos para esses IDs, mas o ponto seria enganador (verias o tráfego de outras pessoas para esse ID, não o teu), por isso o VoxDMR mantém-no cinza.
+## O indicador de atividade
 
-## Mudar enquanto transmites
+Cada linha de favorito tem um ponto colorido à esquerda. Diz-te de relance o que está a acontecer naquele talkgroup:
 
-Se premires o PTT e depois clicares num talkgroup diferente, o VoxDMR termina a transmissão no TG antigo antes de subscrever o novo. Não chegas a transmitir por engano no grupo errado.
+| Ponto | Significado |
+|---|---|
+| 🟢 **Verde** | Talkgroup ativo. O que estás a ouvir, e para o qual o teu PTT vai transmitir. |
+| 🟡 **Amarelo** | Atividade ao vivo nos **últimos 30 segundos**. Alguém está a falar ou acabou de falar. A linha também mostra o falante (e.g. `← G4ABC John`). |
+| ⚫ **Cinzento** | Inativo. Sem tráfego recente. |
 
-## Onde os favoritos ficam guardados
+A feed de atividade vem do stream live de last-heard da BrandMeister via WebSocket. Não precisas de estar sintonizado num TG para o ver acender a amarelo.
 
-Os IDs dos favoritos e a flag de chamada privada fazem parte do `config.toml` na [diretoria de configuração](./installation). Editar o ficheiro à mão é suportado mas raramente necessário. O seletor na app cobre tudo.
+> **Só BrandMeister.** A feed live é um serviço da BrandMeister. Quando o perfil ativo está numa rede Homebrew (TGIF, FreeDMR, ADN…) os pontos ficam cinzentos. Em Homebrew, a feed de atividade não existe; sabes quem está a falar quando ouves a estação. Volta a um perfil BrandMeister e os pontos voltam a funcionar.
+
+Podes desativar os pontos por completo em **Definições → Interface → Live BrandMeister activity dots** (desktop) se preferires não ter o tráfego de rede — é puramente informativo, não é necessário para RX, TX ou subscrição.
+
+O estado amarelo expira 30 segundos após a última atualização, por isso se um evento Stop se perder, o ponto limpa-se sozinho.
+
+> A feed live é só de leitura e não autenticada, por isso não precisa de configuração extra. Se a tua rede bloqueia `api.brandmeister.network`, os pontos ficam cinzentos mas tudo o resto (RX, TX, subscrição) continua a funcionar.
+
+## Mudar durante uma transmissão
+
+Se carregares no PTT e depois escolheres outro talkgroup, o VoxDMR termina a tua transmissão no TG antigo antes de subscrever o novo. Não vais transmitir acidentalmente no grupo errado.
+
+## Onde os favoritos e aliases são guardados
+
+Os favoritos e aliases por perfil ficam dentro da secção de cada perfil no `config.toml` no desktop, e dentro do blob de configuração por perfil no Android. Acompanham-te quando mudas de perfil, mas não são partilhados entre perfis. Vê [Perfis de Servidor](./server-profiles).
 
 ## Próximos passos
 
-- [PTT Modes](./ptt-modes). Push-to-talk vs toggle, e mudar a tecla PTT.
-- [Audio Settings](./audio-settings). Dispositivos de entrada/saída, ganho, indicador de nível.
-- [Troubleshooting](./troubleshooting). Problemas de ligação, áudio e firmware.
+- [Perfis de Servidor](./server-profiles) — mantém várias redes lado a lado.
+- [Modos PTT](./ptt-modes) — push-to-talk vs toggle, mudar a tecla PTT.
+- [Definições de Áudio](./audio-settings) — dispositivos de entrada/saída, ganho, medidores.
+- [Resolução de Problemas](./troubleshooting) — problemas de ligação, áudio e firmware.

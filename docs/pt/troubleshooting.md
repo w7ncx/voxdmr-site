@@ -1,24 +1,25 @@
 # Resolução de Problemas
 
-Um índice curto das coisas mais prováveis de avariarem e como resolvê-las. A linha de log na barra inferior do VoxDMR é o primeiro sítio para olhar. A maioria das falhas aparece lá. O log de atividade completo está na [diretoria de logs](./installation) (`~/.local/state/voxdmr/logs/` em Linux, `%LOCALAPPDATA%\voxdmr\logs\` em Windows).
+Um índice curto das coisas mais prováveis de avariarem e como resolvê-las. A linha de log na barra inferior no desktop (e o event log no separador Connection do Android) é o primeiro sítio para olhar — a maior parte das falhas aparece lá. O log completo no desktop está na [diretoria de logs](./installation) (`~/.local/state/voxdmr/logs/` em Linux, `%LOCALAPPDATA%\voxdmr\logs\` em Windows); no Android é acessível em **Definições → Acerca**.
 
 ## Ligação
 
 ### Pára em "Authenticating…" e volta a Disconnected
 
-O log mostra `Authentication FAILED - check password`.
+O log mostra `Authentication FAILED - check password` (ou `Login NAK` na Homebrew).
 
-A hotspot security password está errada, ou estás a usar a password da tua conta BrandMeister por engano. Abre [BrandMeister SelfCare](https://brandmeister.network/) → o teu perfil → **Hotspot security password**. É essa que o VoxDMR quer. As passwords de conta não autenticam contra os masters.
+Consoante a rede em que o perfil ativo está:
 
-Se nunca definiste uma hotspot security password no SelfCare, define-a agora e volta a introduzi-la em **Settings → Connection**.
+- **BrandMeister.** A hotspot security password está errada, ou estás a usar a password da *conta* BrandMeister por engano. Abre [BrandMeister SelfCare](https://brandmeister.network/) → o teu perfil → **Hotspot security password**. É essa que o VoxDMR quer — as passwords de conta não autenticam contra os masters. Se nunca definiste uma hotspot security password no SelfCare, define-a agora e volta a introduzi-la no perfil.
+- **TGIF / FreeDMR / ADN / outra rede Homebrew.** Confirma as credenciais publicadas. A password canónica da FreeDMR é `passw0rd`; a TGIF e a ADN têm as suas próprias. Se a password está certa mas a autenticação continua a falhar, troca o **Hash format** do perfil entre **Raw** e **Hex ASCII** — quase todas as redes Homebrew usam Raw, mas algumas instalações antigas precisam de Hex ASCII.
 
 ### Pára em "Connecting…" indefinidamente
 
-O VoxDMR não consegue chegar ao master. Causas possíveis:
+O VoxDMR não consegue chegar ao servidor. Causas possíveis:
 
-- **Host ou porta errados.** A porta por omissão é `54006`. Alguns masters usam outra. Confirma ambos em **Settings → Connection** e na página de estado do master.
-- **Firewall a bloquear UDP de saída.** O protocolo Rewind usa UDP. Firewalls corporativas ou domésticas restritivas por vezes deixam cair UDP. Tenta noutra rede.
-- **O master está offline.** O seletor de masters é preenchido pela API ao vivo da BrandMeister no arranque, mas um master pode cair entre arranques. Escolhe outro.
+- **Host ou porta errados.** Os masters BrandMeister usam `54006`; os masters Homebrew costumam usar `62031`. Confirma ambos no editor de perfil e na página de estado do operador.
+- **Firewall a bloquear UDP de saída.** Tanto Rewind (BrandMeister) como Homebrew (MMDVM) usam UDP. Firewalls corporativos ou domésticos restritivos por vezes deixam cair UDP. Tenta noutra rede.
+- **O servidor está offline.** O picker de masters BrandMeister é ao vivo, mas um master pode cair entre arranques — escolhe outro. Os servidores Homebrew na lista curada (TGIF, FreeDMR, ADN) também têm janelas de manutenção ocasionais; vê a página de estado do operador.
 
 ### "Error: Invalid DMR ID"
 
@@ -26,11 +27,13 @@ O campo DMR ID tem de ser um número de 7 dígitos. Sem espaços, sem traços, s
 
 ### Desliga-se de poucos em poucos minutos
 
-Normalmente é um timeout NAT num router pouco amigável a UDP. O protocolo Rewind faz pings periódicos para manter o mapeamento NAT vivo, mas alguns routers expiram entradas UDP agressivamente. Soluções:
+Normalmente é um timeout NAT num router pouco amigável a UDP. Tanto Rewind como Homebrew fazem pings periódicos para manter o mapeamento NAT vivo, mas alguns routers expiram entradas UDP agressivamente. Soluções:
 
 - Usa ligação por cabo se possível.
 - Tenta outro master (os regionais tendem a ser mais próximos e fiáveis).
 - Alguns routers domésticos têm uma definição "UDP timeout" no NAT/firewall avançado. Aumenta-a se existir.
+
+**No Android**, verifica também **Definições → Background → Ignore battery optimizations** e (em Xiaomi/Samsung/OnePlus/Huawei) a definição de **Autostart** por app. O Android fecha apps em segundo plano agressivamente; se o VoxDMR estiver a ser fechado durante o RX, verás ciclos periódicos de desligar-religar associados ao ecrã apagado.
 
 ## Áudio
 
@@ -57,6 +60,7 @@ O indicador CLIP à direita do medidor TX fica vermelho fixo quando os picos sat
 
 - **Linux**: a maioria das distros expõe todos os dispositivos de entrada a todas as apps. Se estás num Flatpak ou Snap em sandbox (não é como o VoxDMR é distribuído atualmente), o sandbox precisa de conceder acesso ao áudio.
 - **Windows**: abre **Definições → Privacidade e segurança → Microfone**. Confirma que "Permitir que aplicações acedam ao microfone" está ligado, e que o VoxDMR (ou "Aplicações de ambiente de trabalho") tem permissão. Depois de mudar, reinicia o VoxDMR.
+- **Android**: a permissão de microfone é pedida na primeira vez que carregas no PTT. Se a negaste, abre as **Definições do Android → Apps → VoxDMR → Permissões → Microfone** e concede-a manualmente. *Microphone permission denied* no snackbar significa que o VoxDMR não conseguiu capturar áudio.
 
 ## PTT
 
@@ -98,6 +102,8 @@ O `ureq` (o cliente HTTPS que o VoxDMR usa) não lê as definições de proxy do
 ## Pontos de atividade ficam cinza
 
 A feed ao vivo de last-heard vem de `api.brandmeister.network` por WebSocket. Se a tua rede a bloquear, os pontos na lista de favoritos ficam cinza. Tudo o resto (RX, TX, subscrever, falar) continua a funcionar. A feed de atividade é puramente informativa.
+
+**O perfil ativo está numa rede Homebrew?** Então isto é esperado — não existe uma feed de atividade ao vivo equivalente para TGIF, FreeDMR, ADN, etc. Os pontos ficam cinzentos por design. Sabes quem está a falar quando ouves a estação. Volta a um perfil BrandMeister e os pontos voltam a funcionar.
 
 Para verificar se a tua máquina chega ao host:
 

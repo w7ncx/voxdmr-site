@@ -1,8 +1,18 @@
 # Definições de Áudio
 
-As definições de áudio do VoxDMR estão em **Settings → Audio**. Dois seletores de dispositivos, dois deslizadores de ganho, um interruptor de monitorização fora do ar. Os indicadores de nível na janela principal são como afinas os ganhos na prática.
+As definições de áudio do VoxDMR estão em **Definições → Audio** no desktop, e na secção **Audio** do separador **Definições** no Android. Dois deslizadores de ganho, mais alguns extras específicos da plataforma. Os indicadores de nível na janela principal (desktop) ou no ecrã PTT (Android) são como afinas os ganhos na prática.
 
-## Dispositivo de entrada
+## Diferenças entre plataformas
+
+| | Desktop | Android |
+|---|---|---|
+| Seletor de dispositivo entrada/saída | Sim — escolhes endpoints exatos do SO | Não — usa o encaminhamento de áudio do Android (altifalante / auricular / headset / BT) |
+| Intervalo RX gain | 1× – 32× (predefinição 4×) | 1× – 10× (predefinição 4×) |
+| Intervalo TX gain | 0,1× – 4,0× (predefinição 0,5×) | 0,1× – 4,0× (predefinição 0,5×) |
+| RX AGC (Auto level) | Sim | Sim |
+| Monitor mic level off-air | Sim | Não — medidores sempre ativos enquanto o ecrã está ligado |
+
+## Dispositivo de entrada (desktop)
 
 O microfone ou entrada de linha de onde o VoxDMR captura. O seletor lista todos os dispositivos de entrada que o sistema operativo expõe. Em Linux são PulseAudio / PipeWire / ALSA; em Windows, endpoints WASAPI em modo partilhado.
 
@@ -10,9 +20,15 @@ O VoxDMR memoriza o dispositivo pelo nome. Se trocares de auscultadores, o selet
 
 > A captura é fixa em 48 kHz mono internamente. O vocoder precisa de 8 kHz; o VoxDMR faz resampling em tempo real. Não precisas de configurar nada de especial no sistema operativo.
 
-## Dispositivo de saída
+## Dispositivo de saída (desktop)
 
 Onde o áudio recebido é reproduzido. Tem a mesma forma que o seletor de entrada. Auscultadores fortemente recomendados num cliente desktop para evitar realimentação quando estás ao lado do microfone.
+
+## Encaminhamento (Android)
+
+O Android trata do encaminhamento de entrada e saída por ti — o VoxDMR captura do microfone ativo no momento (interno, headset com fios, headset BT) e reproduz na saída ativa (altifalante, auricular, headset). Liga um headset com fios ou emparelha um dispositivo BT e o Android muda automaticamente; o VoxDMR segue.
+
+Não há um seletor de dispositivo dentro da app no Android. Se quiseres forçar a reprodução para o auricular em vez do altifalante, usa o seletor de saída de média do Android (no ecrã de bloqueio / quick-settings).
 
 ## RX gain
 
