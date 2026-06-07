@@ -8,7 +8,6 @@ The site is published at **[voxdmr.jcalado.com](https://voxdmr.jcalado.com)**.
 
 - **Download** the latest release: [github.com/jcalado/voxdmr-site/releases](https://github.com/jcalado/voxdmr-site/releases) — Linux and Windows binaries.
 - **Install guide:** see [voxdmr.jcalado.com/docs/installation](https://voxdmr.jcalado.com/docs/installation).
-- **Source for the app:** [jcalado/dmr-input](https://github.com/jcalado/dmr-input). This repo only contains the website.
 
 ## License
 

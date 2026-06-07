@@ -580,7 +580,7 @@ export default function App() {
             {[
               { label: t("footer.docs"), href: "/docs" },
               { label: t("footer.privacy"), href: "/privacy" },
-              { label: t("footer.github"), href: "https://github.com/jcalado/dmr-input", external: true },
+              { label: t("footer.github"), href: "https://github.com/jcalado/voxdmr-site/releases", external: true },
             ].map((link) => (
               <a
                 key={link.href}
