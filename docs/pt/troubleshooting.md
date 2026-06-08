@@ -35,6 +35,8 @@ Normalmente é um timeout NAT num router pouco amigável a UDP. Tanto Rewind com
 
 **No Android**, verifica também **Definições → Background → Ignore battery optimizations** e (em Xiaomi/Samsung/OnePlus/Huawei) a definição de **Autostart** por app. O Android fecha apps em segundo plano agressivamente; se o VoxDMR estiver a ser fechado durante o RX, verás ciclos periódicos de desligar-religar associados ao ecrã apagado.
 
+O VoxDMR volta a ligar-se automaticamente após uma queda (está ligado por predefinição), por isso uma falha breve deve resolver-se sozinha sem qualquer ação — vê [Reconexão automática](./auto-reconnect). Se preferires que fique desligado numa queda, podes desativar a opção lá.
+
 ## Áudio
 
 ### Não ouves outras estações

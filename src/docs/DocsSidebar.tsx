@@ -14,6 +14,7 @@ const pageTitleKeys: Record<string, string> = {
   "ptt-modes": "docs.page.pttModes",
   "audio-settings": "docs.page.audioSettings",
   "server-profiles": "docs.page.serverProfiles",
+  "auto-reconnect": "docs.page.autoReconnect",
   "talkgroups": "docs.page.talkgroups",
   "troubleshooting": "docs.page.troubleshooting",
   "changelog": "docs.page.changelog",

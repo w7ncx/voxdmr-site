@@ -142,6 +142,7 @@
   "docs.page.pttModes": "Modos PTT",
   "docs.page.audioSettings": "Definições de Áudio",
   "docs.page.serverProfiles": "Perfis de Servidor",
+  "docs.page.autoReconnect": "Reconexão automática",
   "docs.page.talkgroups": "Talkgroups",
   "docs.page.troubleshooting": "Resolução de Problemas",
   "docs.page.changelog": "Registo de Alterações"

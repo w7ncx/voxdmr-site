@@ -35,6 +35,8 @@ Usually a NAT timeout on a UDP-blocking-ish router. Both Rewind and Homebrew pin
 
 **On Android**, also check **Settings → Background → Ignore battery optimizations** and (on Xiaomi/Samsung/OnePlus/Huawei) the per-app **Autostart** setting. Android aggressively kills background apps; if VoxDMR is being killed during RX you'll see periodic disconnect-then-reconnect cycles tied to screen-off.
 
+VoxDMR reconnects automatically after a drop (it's on by default), so a brief blip should heal itself without any action — see [Auto-reconnect](./auto-reconnect). If you'd rather it stay disconnected on a drop, you can turn the toggle off there.
+
 ## Audio
 
 ### You can't hear other stations

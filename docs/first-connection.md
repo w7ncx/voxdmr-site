@@ -155,6 +155,8 @@ Some popular talkgroups to try once Parrot works:
 
 Open Settings → Connection (or the Session card on Android) and tick **Auto-connect**. From then on, VoxDMR connects on launch with no extra clicks.
 
+VoxDMR also keeps you connected after a drop or network switch on its own — see [Auto-reconnect](./auto-reconnect). It's on by default.
+
 ## Next steps
 
 - [Server Profiles](./server-profiles) — keep multiple network configs side by side and switch with a tap.

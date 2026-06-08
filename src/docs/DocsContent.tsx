@@ -71,6 +71,24 @@ export function DocsContent({ slug, html }: { slug: string; html: string }) {
     }
   }, [openModal]);
 
+  // Scroll to the `#heading-id` anchor once the parsed content is in the DOM —
+  // covers both landing on a page with a hash (cross-page links reload) and
+  // in-page hash changes. Headings get GitHub-style ids in markdown.ts.
+  useEffect(() => {
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (!hash) return;
+      const el = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (el) el.scrollIntoView();
+    };
+    const raf = requestAnimationFrame(scrollToHash);
+    window.addEventListener("hashchange", scrollToHash);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("hashchange", scrollToHash);
+    };
+  }, [html, slug]);
+
   if (!page) {
     return (
       <div className="flex-1 p-6 lg:p-10">

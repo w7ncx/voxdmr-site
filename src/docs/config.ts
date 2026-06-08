@@ -20,6 +20,7 @@ export const docsConfig: DocGroup[] = [
     label: "Using VoxDMR",
     pages: [
       { slug: "server-profiles", title: "Server Profiles" },
+      { slug: "auto-reconnect", title: "Auto-reconnect" },
       { slug: "talkgroups", title: "Talkgroups" },
       { slug: "ptt-modes", title: "PTT Modes" },
       { slug: "audio-settings", title: "Audio Settings" },

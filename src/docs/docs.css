@@ -3,8 +3,30 @@
 /* Platform filtering — hide non-matching sections */
 [data-platform-filter="desktop"] [data-platform="mobile"],
 [data-platform-filter="mobile"] [data-platform="desktop"] { display: none; }
+/* Offset anchor-scroll targets so headings clear the sticky 3.5rem nav. */
+.prose :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: 4.5rem; }
+
+/* Hover-revealed permalink icon in the left gutter of section headings.
+   Absolutely positioned so it never shifts the heading text. */
+.prose :is(h2, h3, h4, h5, h6) { position: relative; }
+.prose .heading-anchor {
+  position: absolute;
+  left: -1.05em;
+  /* Center on the first text line (line-height 1.8 → middle at 0.9em), so the
+     icon tracks the title text rather than the full padded box. */
+  top: 0.9em;
+  transform: translateY(-50%);
+  display: inline-flex;
+  color: #64748B;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+.prose .heading-anchor svg { width: 0.8em; height: 0.8em; }
+.prose :is(h2, h3, h4, h5, h6):hover .heading-anchor,
+.prose .heading-anchor:focus-visible { opacity: 1; }
+.prose .heading-anchor:hover { color: #EF4444; text-decoration: none; }
 .prose h1 { color: white; font-family: "Poppins", sans-serif; font-size: 2.25rem; font-weight: 700; margin: 0 0 0.5rem 0; }
-.prose h2 { color: white; font-size: 1.35rem; font-weight: 700; margin: 3rem 0 0.75rem 0; padding-top: 0.5rem; }
+.prose h2 { color: white; font-size: 1.35rem; font-weight: 700; margin: 3.5rem 0 0.75rem 0; }
 .prose h3 { color: white; font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.5rem 0; }
 .prose p { margin: 0 0 1rem 0; }
 .prose a { color: #EF4444; text-decoration: none; }

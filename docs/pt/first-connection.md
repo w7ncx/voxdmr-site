@@ -157,6 +157,8 @@ Alguns talkgroups populares para experimentar depois do Parrot:
 
 Abre Definições → Connection (ou o cartão Session no Android) e liga **Auto-connect**. A partir daí, o VoxDMR liga-se automaticamente no arranque sem cliques extra.
 
+O VoxDMR também te mantém ligado sozinho após uma queda ou mudança de rede — vê [Reconexão automática](./auto-reconnect). Está ligada por predefinição.
+
 ## Próximos passos
 
 - [Perfis de Servidor](./server-profiles) — mantém várias configurações de rede lado a lado e muda com um toque.
