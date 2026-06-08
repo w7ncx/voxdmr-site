@@ -15,12 +15,12 @@ function getMarkdownHtml(slug: string, lang: string): string | null {
   if (lang !== "en") {
     const langKey = `/docs/${lang}/${slug}.md`;
     const langRaw = markdownFiles[langKey];
-    if (langRaw) return parseMarkdown(langRaw);
+    if (langRaw) return parseMarkdown(langRaw, lang);
   }
   const key = `/docs/${slug}.md`;
   const raw = markdownFiles[key];
   if (!raw) return null;
-  return parseMarkdown(raw);
+  return parseMarkdown(raw, "en");
 }
 
 function DocsLayoutInner() {

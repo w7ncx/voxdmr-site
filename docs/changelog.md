@@ -2,7 +2,22 @@
 
 Release notes for VoxDMR. Each release page on GitHub has the full commit list and the signed binaries; this is the human summary.
 
+## v0.12.0
+
+::: platforms desktop mobile
+
+_Released June 2026. Desktop (now incl. macOS) + Android._
+
+Two headline changes: VoxDMR now rides out connection drops on its own, and macOS gets its first official build.
+
+- **Auto-reconnect.** When the link drops unexpectedly — a timeout, a server-side error, or a network change (Wi-Fi ↔ cellular) — VoxDMR reconnects on its own with exponential backoff (~2 s growing to a ~60 s cap, jittered, unlimited retries) and re-subscribes to your last talkgroup, so you land back where you were. It stops only on a deliberate disconnect or an authentication failure. On by default; toggle it in **Settings → Connection** on desktop or **Settings** on Android. Shared by both frontends. See [Auto-reconnect](./auto-reconnect).
+- **macOS desktop build.** macOS is now a release target — a native Apple Silicon (arm64) `.app` shipped in a `.dmg`, with an in-app microphone-permission prompt on first launch and smooth CoreAudio receive playback. This clears the "macOS isn't a release target yet" limitation noted back in v0.7.0. Intel Macs aren't built yet.
+
+`config.toml` (desktop) and the Android settings gain an `auto_reconnect` flag, defaulting to on; older configs without it pick up that default. No other config, paths, or protocol semantics changed.
+
 ## v0.10.0
+
+::: platforms desktop mobile
 
 _Released May 2026. Desktop + Android._
 
@@ -21,6 +36,8 @@ Config migration: existing `config.toml` files get the active connection promote
 
 ## v0.9.0
 
+::: platforms desktop
+
 _Released May 2026._
 
 Adds **in-app auto-update**. VoxDMR now checks for new releases on launch and on demand, and can install them without leaving the app — no separate download trip, no installer to find.
@@ -34,6 +51,8 @@ Adds **in-app auto-update**. VoxDMR now checks for new releases on launch and on
 Stable channel only — pre-releases are excluded. The check hits a fixed public repo (`jcalado/voxdmr-site`); no telemetry, no analytics, no registration. `config.toml` gains an `[updates]` section that records skipped versions and the *Remind me later* timestamp; older configs without it pick up the documented defaults.
 
 ## v0.8.0
+
+::: platforms desktop
 
 _Released May 2026._
 
@@ -52,6 +71,8 @@ Adjacent UX polish:
 `config.toml` gains a new `[tot]` section; older configs without it pick up the documented defaults. No env vars, paths, or protocol semantics changed.
 
 ## v0.7.0 (first public release)
+
+::: platforms desktop
 
 _Released April 2026. Linux x86_64 + Windows x86_64._
 

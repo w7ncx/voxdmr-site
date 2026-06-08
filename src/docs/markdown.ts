@@ -1,4 +1,4 @@
-import { marked } from "marked";
+import { marked, type TokenizerAndRendererExtension, type Tokens } from "marked";
 
 /**
  * GitHub-style heading slug: lowercase, strip inline HTML/punctuation (keeping
@@ -26,7 +26,48 @@ const ANCHOR_ICON =
 // Reset in the `preprocess` hook at the start of every parse.
 let slugCounts: Record<string, number> = {};
 
+/**
+ * Platform badges, rendered from a `::: platforms desktop mobile` block so the
+ * markup is defined once here instead of repeated as raw HTML in content. The
+ * directive is language-agnostic (platform keys only); labels are localized
+ * below from the active parse language, set by `parseMarkdown`.
+ */
+const BADGE_LABELS = {
+  en: { desktop: "Desktop", mobile: "Mobile" },
+  pt: { desktop: "Desktop", mobile: "Telemóvel" },
+} as const;
+
+type BadgeLang = keyof typeof BADGE_LABELS;
+let currentLang: BadgeLang = "en";
+
+const platformBadges: TokenizerAndRendererExtension = {
+  name: "platformBadges",
+  level: "block",
+  start(src) {
+    return src.match(/^:::[ \t]*platforms/m)?.index;
+  },
+  tokenizer(src) {
+    const m = /^:::[ \t]*platforms[ \t]+([a-zA-Z][a-zA-Z \t]*?)[ \t]*(?:\n+|$)/.exec(src);
+    if (!m) return undefined;
+    return {
+      type: "platformBadges",
+      raw: m[0],
+      platforms: m[1].trim().split(/[ \t]+/).map((s) => s.toLowerCase()),
+    } as Tokens.Generic;
+  },
+  renderer(token) {
+    const platforms = (token as Tokens.Generic & { platforms?: string[] }).platforms ?? [];
+    const labels = BADGE_LABELS[currentLang];
+    const spans = platforms
+      .filter((p): p is keyof typeof labels => p in labels)
+      .map((p) => `<span class="ver-badge ver-badge--${p}">${labels[p]}</span>`)
+      .join("");
+    return spans ? `<p class="ver-badges">${spans}</p>\n` : "";
+  },
+};
+
 marked.use({
+  extensions: [platformBadges],
   hooks: {
     preprocess(markdown) {
       slugCounts = {};
@@ -53,6 +94,7 @@ marked.use({
   },
 });
 
-export function parseMarkdown(src: string): string {
+export function parseMarkdown(src: string, lang: string = "en"): string {
+  currentLang = (lang in BADGE_LABELS ? lang : "en") as BadgeLang;
   return marked.parse(src) as string;
 }

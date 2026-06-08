@@ -2,7 +2,22 @@
 
 Notas de versão do VoxDMR. Cada página de release no GitHub tem a lista completa de commits e os binários assinados; isto é o resumo humano.
 
+## v0.12.0
+
+::: platforms desktop mobile
+
+_Lançada em junho de 2026. Desktop (agora incl. macOS) + Android._
+
+Duas grandes mudanças: o VoxDMR aguenta agora as quedas de ligação sozinho, e o macOS ganha o seu primeiro build oficial.
+
+- **Reconexão automática.** Quando a ligação cai de forma inesperada — um timeout, um erro do lado do servidor ou uma mudança de rede (Wi-Fi ↔ dados móveis) — o VoxDMR volta a ligar-se sozinho com backoff exponencial (~2 s a crescer até um teto de ~60 s, com jitter, tentativas ilimitadas) e re-subscreve o teu último talkgroup, para regressares onde estavas. Só pára numa desconexão deliberada ou numa falha de autenticação. Ligada por defeito; alterna em **Definições → Connection** no desktop ou **Definições** no Android. Partilhada pelos dois frontends. Vê [Reconexão automática](./auto-reconnect).
+- **Build de desktop para macOS.** O macOS é agora um alvo de release — uma `.app` nativa para Apple Silicon (arm64) distribuída num `.dmg`, com um pedido de permissão de microfone na app no primeiro arranque e reprodução de receção CoreAudio sem cortes. Isto resolve a limitação "o macOS ainda não é um alvo de release" anotada na v0.7.0. Macs Intel ainda não têm build.
+
+O `config.toml` (desktop) e as definições do Android ganham uma flag `auto_reconnect`, ligada por defeito; configurações antigas sem ela assumem esse valor. Nada mais mudou na configuração, caminhos ou semântica de protocolo.
+
 ## v0.10.0
+
+::: platforms desktop mobile
 
 _Lançada em maio de 2026. Desktop + Android._
 
@@ -21,6 +36,8 @@ Migração da configuração: ficheiros `config.toml` existentes são migrados p
 
 ## v0.9.0
 
+::: platforms desktop
+
 _Lançada em maio de 2026._
 
 Adiciona **auto-atualização integrada**. O VoxDMR passa a verificar novas versões no arranque e a pedido, e pode instalá-las sem sair da app — sem ida ao browser, sem installer para procurar.
@@ -34,6 +51,8 @@ Adiciona **auto-atualização integrada**. O VoxDMR passa a verificar novas vers
 Apenas canal estável — pre-releases ficam de fora. A verificação fala com um repositório público fixo (`jcalado/voxdmr-site`); zero telemetria, zero analítica, zero registo. O `config.toml` ganha uma secção `[updates]` que guarda versões saltadas e o timestamp do *Remind me later*; configurações antigas sem ela assumem os defaults documentados.
 
 ## v0.8.0
+
+::: platforms desktop
 
 _Lançada em maio de 2026._
 
@@ -52,6 +71,8 @@ Polimento de UX adjacente:
 O `config.toml` ganha uma nova secção `[tot]`; configurações antigas que não a tenham assumem os defaults documentados. Nenhuma variável de ambiente, caminho ou semântica de protocolo mudou.
 
 ## v0.7.0 (primeira versão pública)
+
+::: platforms desktop
 
 _Lançada em abril de 2026. Linux x86_64 + Windows x86_64._
 

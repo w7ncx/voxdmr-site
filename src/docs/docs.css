@@ -25,6 +25,25 @@
 .prose :is(h2, h3, h4, h5, h6):hover .heading-anchor,
 .prose .heading-anchor:focus-visible { opacity: 1; }
 .prose .heading-anchor:hover { color: #EF4444; text-decoration: none; }
+
+/* Platform badges on changelog release entries. Icons mirror the docs platform
+   toggle (lucide Monitor / Smartphone), inlined as data-URI background images
+   the same way the blockquote tip icon is. */
+.prose .ver-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1rem 0; }
+.prose .ver-badge {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  line-height: 1; padding: 0.3rem 0.65rem; border-radius: 9999px; border: 1px solid;
+}
+.prose .ver-badge::before {
+  content: ""; width: 0.95em; height: 0.95em; flex-shrink: 0;
+  background-repeat: no-repeat; background-position: center; background-size: contain;
+}
+.prose .ver-badge--desktop { color: #38BDF8; border-color: rgba(56, 189, 248, 0.35); background: rgba(56, 189, 248, 0.1); }
+.prose .ver-badge--desktop::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338BDF8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='3' width='20' height='14' rx='2'/%3E%3Cpath d='M8 21h8'/%3E%3Cpath d='M12 17v4'/%3E%3C/svg%3E"); }
+.prose .ver-badge--mobile { color: #FB923C; border-color: rgba(251, 146, 60, 0.35); background: rgba(251, 146, 60, 0.1); }
+.prose .ver-badge--mobile::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FB923C' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='2' width='14' height='20' rx='2'/%3E%3Cpath d='M12 18h.01'/%3E%3C/svg%3E"); }
+
 .prose h1 { color: white; font-family: "Poppins", sans-serif; font-size: 2.25rem; font-weight: 700; margin: 0 0 0.5rem 0; }
 .prose h2 { color: white; font-size: 1.35rem; font-weight: 700; margin: 3.5rem 0 0.75rem 0; }
 .prose h3 { color: white; font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.5rem 0; }
