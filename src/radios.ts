@@ -75,7 +75,7 @@ export const radios: Radio[] = [
     makerUrl: "https://www.inrico.ca/t320",
     image: "/radios/inrico-t320.jpg",
     ptt: "yes",
-    knob: "unknown",
+    knob: "na",
     sideKeys: "unknown",
     audio: "good",
     androidVersion: "7",

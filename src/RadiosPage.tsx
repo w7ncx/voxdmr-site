@@ -190,8 +190,7 @@ function ScoreMeter({ radio, score, t }: { radio: Radio; score: number; t: (key:
           className={`h-full rounded-full origin-left ${scoreBarColor(score)}`}
           style={{ width: `${score}%` }}
           initial={reduce ? false : { scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
+          animate={{ scaleX: 1 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
         />
       </div>
