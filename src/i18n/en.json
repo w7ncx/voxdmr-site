@@ -173,6 +173,8 @@
   "radios.audio.poor": "Poor",
   "radios.yes": "Supported",
   "radios.no": "Not supported",
+  "radios.na": "N/A",
+  "radios.unknown": "Not tested",
   "radios.pendingTitle": "Testing pending",
   "radios.pendingDesc": "I haven't fully tested this radio yet.",
   "radios.makerAria": "manufacturer website",

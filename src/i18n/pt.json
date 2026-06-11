@@ -173,6 +173,8 @@
   "radios.audio.poor": "Fraco",
   "radios.yes": "Suportado",
   "radios.no": "Não suportado",
+  "radios.na": "N/D",
+  "radios.unknown": "Não testado",
   "radios.pendingTitle": "Teste pendente",
   "radios.pendingDesc": "Ainda não testei totalmente este rádio.",
   "radios.makerAria": "site do fabricante",

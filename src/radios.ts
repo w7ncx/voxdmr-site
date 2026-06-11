@@ -1,6 +1,15 @@
 export type RadioStatus = "full" | "partial" | "experimental" | "pending";
 export type AudioQuality = "good" | "ok" | "poor";
 
+/**
+ * Hardware feature support:
+ * - "yes"     — present and works (earns the feature's weight)
+ * - "no"      — present but doesn't work (earns 0, still counted)
+ * - "na"      — the radio doesn't have this feature (excluded from the score)
+ * - "unknown" — not tested yet (earns 0, still counted)
+ */
+export type Support = "yes" | "no" | "na" | "unknown";
+
 export interface Radio {
   /** kebab-case; used as the React key and the `radios.notes.<id>` i18n key. */
   id: string;
@@ -14,10 +23,10 @@ export interface Radio {
   makerUrl?: string;
   /** Path to a product image under /public, e.g. "/radios/hytera-p50.png". Optional; renders a thumbnail when set. */
   image?: string;
-  /** null = unknown / not yet tested (rendered as an em dash). */
-  ptt: boolean | null;
-  knob: boolean | null;
-  sideKeys: boolean | null;
+  ptt: Support;
+  knob: Support;
+  sideKeys: Support;
+  /** null = not tested yet (rendered as an em dash). */
   audio: AudioQuality | null;
   androidVersion: string | null;
   testedAppVersion: string | null;
@@ -34,9 +43,9 @@ export const radios: Radio[] = [
     maker: "Hytera",
     makerUrl: "https://www.hytera.com/en/product-new/lte-broadband/poc-radio/p50.html",
     image: "/radios/hytera-p50.png",
-    ptt: true,
-    knob: true,
-    sideKeys: false,
+    ptt: "yes",
+    knob: "yes",
+    sideKeys: "no",
     audio: "good",
     androidVersion: "12",
     testedAppVersion: "0.12.0",
@@ -49,9 +58,9 @@ export const radios: Radio[] = [
     model: "1B-WLI0-OQSK",
     maker: "MKMXPTT",
     image: "/radios/mkmxptt-1b-wli0-oqsk.jpg",
-    ptt: true,
-    knob: true,
-    sideKeys: true,
+    ptt: "yes",
+    knob: "yes",
+    sideKeys: "yes",
     audio: "good",
     androidVersion: "9",
     testedAppVersion: "0.12.0",
@@ -65,9 +74,9 @@ export const radios: Radio[] = [
     maker: "Inrico",
     makerUrl: "https://www.inrico.ca/t320",
     image: "/radios/inrico-t320.jpg",
-    ptt: true,
-    knob: null,
-    sideKeys: null,
+    ptt: "yes",
+    knob: "unknown",
+    sideKeys: "unknown",
     audio: "good",
     androidVersion: "7",
     testedAppVersion: "0.12.0",
@@ -80,9 +89,9 @@ export const radios: Radio[] = [
     model: "ZL65",
     maker: "KSUN",
     image: "/radios/ksun-zl65.jpg",
-    ptt: null,
-    knob: null,
-    sideKeys: null,
+    ptt: "unknown",
+    knob: "unknown",
+    sideKeys: "unknown",
     audio: null,
     androidVersion: null,
     testedAppVersion: null,
@@ -90,24 +99,58 @@ export const radios: Radio[] = [
   },
 ];
 
-/** Max attainable {@link performanceScore}, kept here so weights stay in one place. */
-const SCORE_WEIGHTS = { ptt: 30, knob: 25, sideKeys: 20, audioGood: 25, audioOk: 15, audioPoor: 5 };
+/** Each scorable feature's maximum weight; the audio weight is earned partially by quality. */
+const FEATURE_WEIGHTS = { ptt: 30, knob: 25, sideKeys: 20, audio: 25 } as const;
+const AUDIO_EARNED: Record<AudioQuality, number> = { good: 25, ok: 15, poor: 5 };
+
+export type ScoreKey = "ptt" | "knob" | "sideKeys" | "audio";
+
+export interface ScorePart {
+  key: ScoreKey;
+  /** Points this feature contributes to the score. */
+  earned: number;
+  /** This feature's maximum points. */
+  weight: number;
+  /** Whether the feature counts toward the score. False only when the radio lacks it ("na"). */
+  counted: boolean;
+  /** Raw state for display: a Support value, or an AudioQuality, or "unknown". */
+  state: Support | AudioQuality;
+}
+
+function featurePart(key: Exclude<ScoreKey, "audio">, s: Support): ScorePart {
+  const weight = FEATURE_WEIGHTS[key];
+  if (s === "na") return { key, earned: 0, weight, counted: false, state: "na" };
+  return { key, earned: s === "yes" ? weight : 0, weight, counted: true, state: s };
+}
+
+/** Per-feature scoring breakdown, the single source of truth for the score and its tooltip. */
+export function scoreParts(r: Radio): ScorePart[] {
+  return [
+    featurePart("ptt", r.ptt),
+    featurePart("knob", r.knob),
+    featurePart("sideKeys", r.sideKeys),
+    {
+      key: "audio",
+      earned: r.audio ? AUDIO_EARNED[r.audio] : 0,
+      weight: FEATURE_WEIGHTS.audio,
+      counted: true,
+      state: r.audio ?? "unknown",
+    },
+  ];
+}
 
 /**
- * How well a radio works with VoxDMR, scored 0–100 from its measured hardware support.
- * Returns null for radios with no measured fields yet (e.g. testing pending), which
- * callers sort to the end.
+ * How well a radio works with VoxDMR, scored 0–100 as a percentage of the features it
+ * actually has. Features the radio lacks ("na") are excluded from the denominator, so a
+ * radio without (say) a rotary knob is judged only on the features it does provide.
+ * Returns null when nothing has been measured yet (e.g. testing pending).
  */
 export function performanceScore(r: Radio): number | null {
-  if (r.ptt === null && r.knob === null && r.sideKeys === null && r.audio === null) {
-    return null;
-  }
-  let score = 0;
-  if (r.ptt) score += SCORE_WEIGHTS.ptt;
-  if (r.knob) score += SCORE_WEIGHTS.knob;
-  if (r.sideKeys) score += SCORE_WEIGHTS.sideKeys;
-  if (r.audio === "good") score += SCORE_WEIGHTS.audioGood;
-  else if (r.audio === "ok") score += SCORE_WEIGHTS.audioOk;
-  else if (r.audio === "poor") score += SCORE_WEIGHTS.audioPoor;
-  return score;
+  const parts = scoreParts(r);
+  const hasKnown = parts.some((p) => p.state !== "unknown" && p.state !== "na");
+  if (!hasKnown) return null;
+  const counted = parts.filter((p) => p.counted);
+  const total = counted.reduce((sum, p) => sum + p.weight, 0);
+  if (total === 0) return null;
+  return Math.round((counted.reduce((sum, p) => sum + p.earned, 0) / total) * 100);
 }

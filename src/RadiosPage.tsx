@@ -5,7 +5,7 @@ import { FaceDissatisfied } from "@carbon/icons-react";
 import { useLanguage } from "./i18n/LanguageContext";
 import { SiteNav } from "./SiteNav";
 import { useDocumentMeta } from "./useDocumentMeta";
-import { radios, performanceScore, type Radio, type RadioStatus, type AudioQuality } from "./radios";
+import { radios, performanceScore, scoreParts, type Radio, type RadioStatus, type AudioQuality, type Support } from "./radios";
 
 type StatusFilter = RadioStatus | "all";
 type SortKey = "featured" | "performance" | "name" | "brand" | "model";
@@ -112,17 +112,30 @@ const AUDIO_BADGE: Record<AudioQuality, string> = {
   poor: "bg-rose-500/15 text-rose-300",
 };
 
-function BoolCell({ value, t }: { value: boolean | null; t: (key: string) => string }) {
-  if (value === null) return <span className="text-on-surface-muted">—</span>;
-  return value ? (
-    <span className="flex items-center text-emerald-400">
-      <Check className="w-4 h-4" aria-hidden="true" />
-      <span className="sr-only">{t("radios.yes")}</span>
-    </span>
-  ) : (
-    <span className="flex items-center text-rose-400">
-      <X className="w-4 h-4" aria-hidden="true" />
-      <span className="sr-only">{t("radios.no")}</span>
+function BoolCell({ value, t }: { value: Support; t: (key: string) => string }) {
+  if (value === "yes")
+    return (
+      <span className="flex items-center text-emerald-400">
+        <Check className="w-4 h-4" aria-hidden="true" />
+        <span className="sr-only">{t("radios.yes")}</span>
+      </span>
+    );
+  if (value === "no")
+    return (
+      <span className="flex items-center text-rose-400">
+        <X className="w-4 h-4" aria-hidden="true" />
+        <span className="sr-only">{t("radios.no")}</span>
+      </span>
+    );
+  if (value === "na")
+    return (
+      <span className="text-xs font-semibold uppercase tracking-wide text-on-surface-muted/70">
+        {t("radios.na")}
+      </span>
+    );
+  return (
+    <span className="text-on-surface-muted">
+      —<span className="sr-only">{t("radios.unknown")}</span>
     </span>
   );
 }
@@ -138,15 +151,7 @@ function DetailRow({ label, children }: { label: string; children: ReactNode }) 
 
 function ScoreMeter({ radio, score, t }: { radio: Radio; score: number; t: (key: string) => string }) {
   const reduce = useReducedMotion();
-  const breakdown = [
-    { label: t("radios.col.ptt"), pts: radio.ptt ? 30 : 0 },
-    { label: t("radios.col.knob"), pts: radio.knob ? 25 : 0 },
-    { label: t("radios.col.sideKeys"), pts: radio.sideKeys ? 20 : 0 },
-    {
-      label: t("radios.col.audio"),
-      pts: radio.audio === "good" ? 25 : radio.audio === "ok" ? 15 : radio.audio === "poor" ? 5 : 0,
-    },
-  ];
+  const parts = scoreParts(radio);
   return (
     <div className="mt-5 pt-4 border-t border-border">
       <div className="flex items-center justify-between text-xs mb-1.5">
@@ -164,12 +169,16 @@ function ScoreMeter({ radio, score, t }: { radio: Radio; score: number; t: (key:
             className="pointer-events-none absolute bottom-full left-0 mb-2 w-max max-w-[16rem] rounded-xl border border-border bg-surface p-3 text-left opacity-0 shadow-xl transition-opacity duration-200 group-hover/score:opacity-100 group-focus-within/score:opacity-100 z-20"
           >
             <span className="block font-semibold text-on-surface mb-2 normal-case">{t("radios.scoreHelp")}</span>
-            {breakdown.map((b) => (
-              <span key={b.label} className="flex items-center justify-between gap-6">
-                <span className="text-on-surface-muted">{b.label}</span>
-                <span className={`tabular-nums font-semibold ${b.pts > 0 ? "text-emerald-300" : "text-on-surface-muted/60"}`}>
-                  +{b.pts}
-                </span>
+            {parts.map((p) => (
+              <span key={p.key} className="flex items-center justify-between gap-6">
+                <span className="text-on-surface-muted">{t(`radios.col.${p.key}`)}</span>
+                {p.counted ? (
+                  <span className={`tabular-nums font-semibold ${p.earned > 0 ? "text-emerald-300" : "text-on-surface-muted/60"}`}>
+                    {p.earned}/{p.weight}
+                  </span>
+                ) : (
+                  <span className="tabular-nums font-semibold text-on-surface-muted/60">{t("radios.na")}</span>
+                )}
               </span>
             ))}
           </span>
