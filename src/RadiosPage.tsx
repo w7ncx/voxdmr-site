@@ -89,6 +89,16 @@ function scoreBarColor(score: number): string {
   return "bg-rose-400";
 }
 
+function formatDate(iso: string, lang: string): string {
+  const d = new Date(`${iso}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString(lang === "pt" ? "pt-PT" : "en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
 const STATUS_BADGE: Record<RadioStatus, string> = {
   full: "bg-emerald-500/15 text-emerald-300",
   partial: "bg-amber-500/15 text-amber-300",
@@ -180,7 +190,17 @@ function ScoreMeter({ radio, score, t }: { radio: Radio; score: number; t: (key:
   );
 }
 
-function RadioCard({ radio, t, index }: { radio: Radio; t: (key: string) => string; index: number }) {
+function RadioCard({
+  radio,
+  t,
+  lang,
+  index,
+}: {
+  radio: Radio;
+  t: (key: string) => string;
+  lang: string;
+  index: number;
+}) {
   const pending = radio.status === "pending";
   const reduce = useReducedMotion();
   const score = performanceScore(radio);
@@ -267,8 +287,11 @@ function RadioCard({ radio, t, index }: { radio: Radio; t: (key: string) => stri
             <DetailRow label={t("radios.col.android")}>
               <span className="text-on-surface">{radio.androidVersion ?? "—"}</span>
             </DetailRow>
-            <DetailRow label={t("radios.col.tested")}>
+            <DetailRow label={t("radios.col.version")}>
               <span className="text-on-surface">{radio.testedAppVersion ?? "—"}</span>
+            </DetailRow>
+            <DetailRow label={t("radios.col.tested")}>
+              <span className="text-on-surface">{radio.testDate ? formatDate(radio.testDate, lang) : "—"}</span>
             </DetailRow>
           </dl>
           <p className="mt-4 text-sm text-on-surface-muted leading-relaxed">{t(`radios.notes.${radio.id}`)}</p>
@@ -280,7 +303,7 @@ function RadioCard({ radio, t, index }: { radio: Radio; t: (key: string) => stri
 }
 
 export default function RadiosPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [brandFilter, setBrandFilter] = useState<string>("all");
@@ -480,7 +503,7 @@ export default function RadiosPage() {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {visible.map((r, i) => (
-              <RadioCard key={r.id} radio={r} t={t} index={i} />
+              <RadioCard key={r.id} radio={r} t={t} lang={lang} index={i} />
             ))}
           </div>
         )}

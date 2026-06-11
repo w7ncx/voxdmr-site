@@ -162,6 +162,7 @@
   "radios.col.sideKeys": "Side keys",
   "radios.col.audio": "Audio",
   "radios.col.android": "Android",
+  "radios.col.version": "VoxDMR version",
   "radios.col.tested": "Tested on",
   "radios.status.full": "Full",
   "radios.status.partial": "Partial",

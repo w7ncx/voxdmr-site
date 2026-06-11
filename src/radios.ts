@@ -21,6 +21,8 @@ export interface Radio {
   audio: AudioQuality | null;
   androidVersion: string | null;
   testedAppVersion: string | null;
+  /** ISO date (YYYY-MM-DD) the radio was last verified. Optional. */
+  testDate?: string;
   status: RadioStatus;
 }
 
@@ -38,6 +40,7 @@ export const radios: Radio[] = [
     audio: "good",
     androidVersion: "12",
     testedAppVersion: "0.11.0",
+    testDate: "2026-06-11",
     status: "full",
   },
   {
@@ -52,6 +55,7 @@ export const radios: Radio[] = [
     audio: "good",
     androidVersion: "9",
     testedAppVersion: "0.11.0",
+    testDate: "2026-06-11",
     status: "full",
   },
   {
