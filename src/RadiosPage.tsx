@@ -364,82 +364,91 @@ export default function RadiosPage() {
         <h1 className="text-4xl lg:text-5xl font-headline font-bold text-white mb-4 tracking-tight">{t("radios.title")}</h1>
         <p className="text-on-surface-muted mb-8 max-w-2xl leading-relaxed">{t("radios.intro")}</p>
 
-        {/* APK download callout */}
-        <div className="relative overflow-hidden mb-12 rounded-3xl border border-vibrant-red/20 bg-surface-raised/40 p-6 sm:p-8">
+        {/* Get-started banner: sideload the APK + donate a radio */}
+        <div className="relative overflow-hidden mb-12 rounded-3xl border border-border bg-surface-raised/40">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-20 -right-12 w-64 h-64 rounded-full bg-vibrant-red/10 blur-3xl"
+            className="pointer-events-none absolute -top-24 -left-16 w-64 h-64 rounded-full bg-vibrant-red/10 blur-3xl"
           />
-          <div className="relative flex flex-col sm:flex-row sm:items-center gap-6">
-            <div className="shrink-0 flex items-center justify-center w-14 h-14 rounded-2xl bg-vibrant-red/15 text-vibrant-red">
-              <Smartphone className="w-7 h-7" aria-hidden="true" />
-            </div>
-
-            <div className="flex-1 min-w-0">
-              <h2 className="text-lg sm:text-xl font-headline font-bold text-white tracking-tight">
-                {t("radios.apk.title")}
-              </h2>
-              <p className="mt-1.5 text-sm text-on-surface-muted leading-relaxed">{t("radios.apk.note")}</p>
-              <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-vibrant-orange">
-                <Cpu className="w-3.5 h-3.5" aria-hidden="true" />
-                {t("radios.apk.tip")}
-              </p>
-            </div>
-
-            <a
-              href="https://github.com/jcalado/voxdmr-site/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-press group/cta shrink-0 inline-flex items-center justify-center gap-2 bg-vibrant-red hover:bg-red-500 text-white px-6 py-3 rounded-2xl font-bold hover:scale-105 transition-all whitespace-nowrap shadow-lg shadow-vibrant-red/20"
-            >
-              <Download className="w-4 h-4 transition-transform group-hover/cta:translate-y-0.5 motion-reduce:transform-none" aria-hidden="true" />
-              {t("radios.apk.cta")}
-            </a>
-          </div>
-        </div>
-
-        {/* Donate-a-radio banner */}
-        <div className="relative overflow-hidden mb-12 rounded-3xl border border-vibrant-orange/20 bg-surface-raised/40 p-6 sm:p-8">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-20 -right-12 w-64 h-64 rounded-full bg-vibrant-orange/10 blur-3xl"
+            className="pointer-events-none absolute -bottom-24 -right-16 w-64 h-64 rounded-full bg-vibrant-orange/10 blur-3xl"
           />
-          <div className="relative flex flex-col sm:flex-row sm:items-center gap-6">
-            <div className="shrink-0 flex items-center justify-center w-14 h-14 rounded-2xl bg-vibrant-orange/15 text-vibrant-orange">
-              <Gift className="w-7 h-7" aria-hidden="true" />
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 divide-y divide-border sm:divide-y-0 sm:divide-x">
+            {/* Download / sideload */}
+            <div className="flex flex-col gap-4 p-6 sm:p-8">
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-2xl bg-vibrant-red/15 text-vibrant-red">
+                  <Smartphone className="w-6 h-6" aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <h2 className="text-lg sm:text-xl font-headline font-bold text-white tracking-tight">
+                    {t("radios.apk.title")}
+                  </h2>
+                  <p className="mt-1.5 text-sm text-on-surface-muted leading-relaxed">{t("radios.apk.note")}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-2xl border border-vibrant-orange/30 bg-vibrant-orange/10 p-4">
+                <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-xl bg-vibrant-orange/20 text-vibrant-orange">
+                  <Cpu className="w-4 h-4" aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold uppercase tracking-wider text-vibrant-orange">{t("radios.apk.tipLabel")}</p>
+                  <p className="mt-1 text-sm text-on-surface leading-relaxed">
+                    <strong className="font-semibold text-white">{t("radios.apk.tipLead")}</strong>{" "}
+                    {t("radios.apk.tip")}
+                  </p>
+                </div>
+              </div>
+              <a
+                href="https://github.com/jcalado/voxdmr-site/releases"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-press group/cta mt-auto inline-flex items-center justify-center gap-2 bg-vibrant-red hover:bg-red-500 text-white px-6 py-3 rounded-2xl font-bold hover:scale-105 transition-all whitespace-nowrap shadow-lg shadow-vibrant-red/20"
+              >
+                <Download className="w-4 h-4 transition-transform group-hover/cta:translate-y-0.5 motion-reduce:transform-none" aria-hidden="true" />
+                {t("radios.apk.cta")}
+              </a>
             </div>
 
-            <div className="flex-1 min-w-0">
-              <h2 className="text-lg sm:text-xl font-headline font-bold text-white tracking-tight">
-                {t("radios.donate.title")}
-              </h2>
-              <p className="mt-1.5 text-sm text-on-surface-muted leading-relaxed">{t("radios.donate.note")}</p>
-              <p className="mt-2 text-sm text-on-surface-muted leading-relaxed">
-                {t("radios.donate.kofiNote")}{" "}
-                <a
-                  href="https://ko-fi.com/jcalado"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-semibold text-vibrant-orange hover:text-orange-300 transition-colors"
-                >
-                  Ko-fi
-                  <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                </a>
-                . {t("radios.donate.kofiUnit")}
-              </p>
-              <p className="mt-3 flex items-start gap-1.5 text-xs text-on-surface-muted/70 leading-relaxed">
+            {/* Donate a radio */}
+            <div className="flex flex-col gap-4 p-6 sm:p-8">
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-2xl bg-vibrant-orange/15 text-vibrant-orange">
+                  <Gift className="w-6 h-6" aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <h2 className="text-lg sm:text-xl font-headline font-bold text-white tracking-tight">
+                    {t("radios.donate.title")}
+                  </h2>
+                  <p className="mt-1.5 text-sm text-on-surface-muted leading-relaxed">{t("radios.donate.note")}</p>
+                  <p className="mt-2 text-sm text-on-surface-muted leading-relaxed">
+                    {t("radios.donate.kofiNote")}{" "}
+                    <a
+                      href="https://ko-fi.com/jcalado"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-semibold text-vibrant-orange hover:text-orange-300 transition-colors"
+                    >
+                      Ko-fi
+                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
+                    </a>
+                    . {t("radios.donate.kofiUnit")}
+                  </p>
+                </div>
+              </div>
+              <p className="flex items-start gap-1.5 text-xs text-on-surface-muted/70 leading-relaxed">
                 <AlertCircle className="w-3.5 h-3.5 mt-0.5 shrink-0" aria-hidden="true" />
                 <span>{t("radios.donate.disclaimer")}</span>
               </p>
+              <a
+                href={DONATE_RADIO_URL}
+                className="btn-press mt-auto inline-flex items-center justify-center gap-2 bg-vibrant-orange hover:bg-orange-400 text-community-bg px-6 py-3 rounded-2xl font-bold hover:scale-105 transition-all whitespace-nowrap shadow-lg shadow-vibrant-orange/20"
+              >
+                <Gift className="w-4 h-4" aria-hidden="true" />
+                {t("radios.donate.cta")}
+              </a>
             </div>
-
-            <a
-              href={DONATE_RADIO_URL}
-              className="btn-press shrink-0 inline-flex items-center justify-center gap-2 bg-vibrant-orange hover:bg-orange-400 text-community-bg px-6 py-3 rounded-2xl font-bold hover:scale-105 transition-all whitespace-nowrap shadow-lg shadow-vibrant-orange/20"
-            >
-              <Gift className="w-4 h-4" aria-hidden="true" />
-              {t("radios.donate.cta")}
-            </a>
           </div>
         </div>
 
