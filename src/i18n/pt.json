@@ -214,5 +214,7 @@
   "radios.notes.inrico-t320": "O PTT funciona e a qualidade de áudio é boa. O suporte para botão rotativo e teclas laterais ainda não foi verificado.",
   "radios.notes.inrico-s200": "O PTT e as teclas laterais programáveis funcionam, com boa qualidade de áudio. Este modelo não tem botão rotativo.",
   "radios.notes.inrico-s100": "O PTT e as teclas laterais programáveis funcionam, com boa qualidade de áudio. Testado em Android 8.1. Este modelo não tem botão rotativo.",
-  "radios.notes.ksun-zl65": "Suporte de hardware completo: o PTT, o botão rotativo e as teclas laterais programáveis funcionam. A qualidade de áudio é razoável. Testado em Android 9."
+  "radios.notes.ksun-zl65": "Suporte de hardware completo: o PTT, o botão rotativo e as teclas laterais programáveis funcionam. A qualidade de áudio é razoável. Testado em Android 9.",
+  "radios.notes.hytera-pnc380": "O PTT funciona e a qualidade de áudio é boa. Este modelo não tem botão rotativo. O suporte para teclas laterais ainda não foi verificado.",
+  "radios.notes.anysecu-t59": "O PTT funciona e a qualidade de áudio é boa. O suporte para botão rotativo e teclas laterais ainda não foi verificado."
 }
